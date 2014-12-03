@@ -1,5 +1,9 @@
-module Renderable
-  def action(controller)
-    ::Controller::ResponseAction::Render.new(template, controller, result)
+module Aldous
+  module View
+    module Renderable
+      def action(controller)
+        ::Aldous::ResponseAction::Render.new(template, controller, result)
+      end
+    end
   end
 end

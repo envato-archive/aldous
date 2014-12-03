@@ -1,3 +1,5 @@
+require 'aldous/view/renderable'
+
 module Aldous
   module View
     class BlankJsonView

@@ -10,9 +10,9 @@ module Aldous
       # BlahPresentPreconditionFailureResult, this new result lives
       # inside the Service module like all the other results
       def self.included(base)
-        failure_result_class_name = "#{base.name.split('::').last}FailureResult"
-        unless Result.const_defined?(failure_result_class_name)
-          Result.const_set(failure_result_class_name, Class.new(Result::PreconditionFailure))
+        failure_result_class_name = "#{base.name.split('::').last}Failure"
+        unless ::Aldous::Result.const_defined?(failure_result_class_name)
+          ::Aldous::Result.const_set(failure_result_class_name, Class.new(::Aldous::Result::PreconditionFailure))
         end
       end
     end

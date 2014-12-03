@@ -1,5 +1,9 @@
-module SendData
-  def action(controller)
-    ::Controller::ResponseAction::SendData.new(data, options, controller, result)
+module Aldous
+  module View
+    module SendData
+      def action(controller)
+        ::Aldous::ResponseAction::SendData.new(data, options, controller, result)
+      end
+    end
   end
 end

@@ -13,7 +13,7 @@ module Aldous
 
       module PrependedMethods
         def perform
-          check_preconditions_result = ::CheckPreconditions.new(preconditions).perform
+          check_preconditions_result = CheckPreconditions.new(preconditions).perform
           return check_preconditions_result unless check_preconditions_result.success?
 
           if defined?(super)
@@ -23,7 +23,7 @@ module Aldous
           end
         rescue => e
           ErrorReporter.report(e)
-          return ::Service::ServerErrorResult.new(error: e.message)
+          return ::Aldous::Result::ServerError.new(error: e.message)
         end
       end
     end

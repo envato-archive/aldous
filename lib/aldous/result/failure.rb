@@ -1,7 +1,7 @@
 require 'aldous/result/base'
 
 module Aldous
-  class Result
+  module Result
     class Failure < Base
       def failure?
         true
