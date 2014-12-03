@@ -11,6 +11,10 @@ module Aldous
         base.prepend PrependedMethods
       end
 
+      def preconditions
+        []
+      end
+
       module PrependedMethods
         def perform
           check_preconditions_result = CheckPreconditions.new(preconditions).perform
@@ -22,7 +26,7 @@ module Aldous
             raise "#{self.class.name} must implement the 'perform' method"
           end
         rescue => e
-          ErrorReporter.report(e)
+          ::Aldous.config.error_reporter.report(e)
           return ::Aldous::Result::ServerError.new(error: e.message)
         end
       end

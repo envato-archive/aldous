@@ -1,5 +1,5 @@
 module Aldous
-  class Dispatch
+  module Dispatch
     class DetermineResponseStatus
       attr_reader :result
 

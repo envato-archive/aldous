@@ -1,3 +1,5 @@
+require 'aldous/response_action/head'
+
 module Aldous
   module View
     module Headable

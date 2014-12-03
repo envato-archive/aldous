@@ -19,7 +19,7 @@ module Aldous
       response_status = determine_response_status.execute
       action_response_type_class.new(result, controller.view_context).action(controller).execute(response_status)
     rescue => e
-      HandleDispatchError.new(e, controller).perform
+      Dispatch::HandleError.new(e, controller).perform
     end
 
     private

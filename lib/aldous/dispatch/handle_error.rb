@@ -4,8 +4,8 @@ require 'aldous/result/server_error'
 require 'aldous/controller_data'
 
 module Aldous
-  class Dispatch
-    class HandleDispatchError
+  module Dispatch
+    class HandleError
       attr_reader :error, :controller
 
       def initialize(error, controller)

@@ -1,5 +1,5 @@
 module Aldous
-  class Dispatch
+  module Dispatch
     class DefaultHtmlResponseTypes
       def response_type_for(result_class)
         {

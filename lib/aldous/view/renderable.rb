@@ -1,3 +1,5 @@
+require 'aldous/response_action/render'
+
 module Aldous
   module View
     module Renderable

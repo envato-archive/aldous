@@ -1,4 +1,3 @@
-require 'aldous/result'
 require 'aldous/result/precondition_failure'
 
 module Aldous

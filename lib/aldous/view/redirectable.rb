@@ -1,3 +1,5 @@
+require 'aldous/response_action/redirect'
+
 module Aldous
   module View
     module Redirectable

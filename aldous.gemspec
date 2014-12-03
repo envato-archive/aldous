@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Aldous::VERSION
   spec.authors       = ["Alan Skorkin"]
   spec.email         = ["alan@skorks.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{Rails brave new world}
+  spec.summary       = %q{Rails brave new world}
   spec.homepage      = ""
   spec.license       = "MIT"
 

@@ -1,4 +1,3 @@
-require 'aldous/result'
 require 'aldous/result/precondition_failure'
 require 'aldous/result/success'
 require 'aldous/service/precondition'
