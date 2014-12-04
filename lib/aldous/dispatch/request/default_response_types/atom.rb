@@ -11,6 +11,10 @@ module Aldous
           def default_view
             ::Aldous::View::Blank::AtomView
           end
+
+          def configured_default_response_types
+            ::Aldous.config.default_atom_response_types
+          end
         end
       end
     end

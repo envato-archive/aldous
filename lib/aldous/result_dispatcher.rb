@@ -3,6 +3,11 @@ require 'aldous/dispatch/request/find_default_response_types'
 require 'aldous/dispatch/determine_response_type'
 require 'aldous/dispatch/determine_response_status'
 
+require 'aldous/headable'
+require 'aldous/redirectable'
+require 'aldous/renderable'
+require 'aldous/send_data'
+
 module Aldous
   class ResultDispatcher
     class << self
@@ -19,24 +24,48 @@ module Aldous
       @result_to_response_type_mapping = result_to_response_type_mapping
     end
 
-    # Rethink the defaults, maybe I should pull them out completely for now???
-    # if precondition failed due to unauthenticated for example can I still
-    # produce the right status for the response???
     def perform
-      action_response_type_class = determine_response_type.execute || default_response_type_class
+      response_type_class = determine_response_type.execute
       response_status = determine_response_status.execute
 
-      # TODO
-      # we can check a few things here
-      # - that we actually have a response_type_class to instantiate if not then we can error out more gracefully
-      # - if response_type_class is instatiated we can check that it has an action method i.e. it implements one of the allowed interfaces
+      report_if_response_type_class_not_found(response_type_class)
 
-      action_response_type_class.new(result, controller.view_context).action(controller).execute(response_status)
+      response_type_class ||= default_response_type_class
+
+      ensure_response_type_class_exists(response_type_class)
+
+      response_type = response_type_class.new(result, controller.view_context)
+
+      ensure_response_type_implements_the_right_interfaces(response_type)
+
+      response_type.action(controller).execute(response_status)
     rescue => e
       Dispatch::HandleError.new(e, controller).perform
     end
 
     private
+
+    def report_if_response_type_class_not_found(response_type_class)
+      unless response_type_class
+        ::Aldous.config.error_reporter.report("Unable to find response type class for #{result.class.name}, will try to use default")
+      end
+    end
+
+    def ensure_response_type_class_exists(response_type_class)
+      unless response_type_class
+        raise "No response type class found for #{result.class.name}"
+      end
+    end
+
+    def ensure_response_type_implements_the_right_interfaces(response_type)
+      response_type_modules = [::Aldous::Headable,
+                               ::Aldous::Redirectable,
+                               ::Aldous::Renderable,
+                               ::Aldous::SendData]
+      unless response_type_modules.any?{|m| response_type.kind_of?(m)}
+        raise "Response type class provided for #{result.class.name} must implement one of #{response_type_modules.join(',')}"
+      end
+    end
 
     def default_response_type_class
       @default_response_type_class ||= default_response_types.response_type_for(result.class)

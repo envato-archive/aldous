@@ -13,15 +13,11 @@ module Aldous
       end
 
       def perform
-        p "*********************"
-        p ::Aldous.config.error_reporter
-        p error
-        p "*********************"
         ::Aldous.config.error_reporter.report(error)
-        response_type_class.new(result, controller.view_context).action.execute(response_status)
+        response_type_class.new(result, controller.view_context).action(controller).execute(response_status)
       rescue
         # final fallback so we can blow up gracefully
-        controller.head :unprocessable_entity
+        controller.head :internal_server_error
       end
 
       private

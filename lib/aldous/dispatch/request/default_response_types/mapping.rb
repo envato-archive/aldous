@@ -9,10 +9,16 @@ module Aldous
       module DefaultResponseTypes
         module Mapping
           def response_type_for(result_class)
-            (configured_default_response_types || default_response_types)[result_class]
+            response_types = configured_default_response_types
+            if configured_default_response_types.nil? ||
+              configured_default_response_types.empty?
+              response_types = default_response_types
+            end
+            response_types[result_class]
           end
 
           def configured_default_response_types
+            {}
           end
 
           def default_response_types

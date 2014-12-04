@@ -20,7 +20,7 @@ module Aldous
         if result.cause && result.cause.kind_of?(::Aldous::Result::Base)
           result_class = result.cause.class
         end
-        result_to_status[result_class] || :unprocessable_entity
+        result_to_status[result_class] || :internal_server_error
       end
 
       private

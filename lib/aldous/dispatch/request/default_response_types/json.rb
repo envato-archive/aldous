@@ -11,6 +11,10 @@ module Aldous
           def default_view
             ::Aldous::View::Blank::JsonView
           end
+
+          def configured_default_response_types
+            ::Aldous.config.default_json_response_types
+          end
         end
       end
     end
