@@ -4,6 +4,8 @@ module Aldous
       # so we have access to the original params that were passed in
       attr_reader :_options
 
+      # TODO this constructor is poop, need to make it better
+      # maybe using inherited hook
       def initialize(options = {})
         @_options = options
         # ensure that any errors or messages end up in the appropriate array

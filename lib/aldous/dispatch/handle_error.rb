@@ -1,7 +1,6 @@
-require 'aldous/dispatch/request_format_to_default_response_types'
+require 'aldous/dispatch/request/find_default_response_types'
 require 'aldous/dispatch/determine_response_status'
 require 'aldous/result/server_error'
-require 'aldous/controller_data'
 
 module Aldous
   module Dispatch
@@ -14,6 +13,10 @@ module Aldous
       end
 
       def perform
+        p "*********************"
+        p ::Aldous.config.error_reporter
+        p error
+        p "*********************"
         ::Aldous.config.error_reporter.report(error)
         response_type_class.new(result, controller.view_context).action.execute(response_status)
       rescue
@@ -28,7 +31,7 @@ module Aldous
       end
 
       def default_response_types
-        @default_response_types ||= RequestFormatToDefaultResponseTypes.new.default_response_types_for(request_format)
+        @default_response_types ||= Dispatch::Request::FindDefaultResponseTypes.new(controller.request).execute
       end
 
       def response_status
@@ -37,10 +40,6 @@ module Aldous
 
       def result
         @result ||= ::Aldous::Result::ServerError.new(error: error)
-      end
-
-      def request_format
-        @request_format ||= ::Aldous::ControllerData.new(controller).request_format
       end
     end
   end

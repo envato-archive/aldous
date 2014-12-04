@@ -9,5 +9,3 @@ module Aldous
     end
   end
 end
-
-

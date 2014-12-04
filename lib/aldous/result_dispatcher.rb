@@ -1,11 +1,16 @@
 require 'aldous/dispatch/handle_error'
-require 'aldous/dispatch/request_format_to_default_response_types'
-require 'aldous/controller_data'
+require 'aldous/dispatch/request/find_default_response_types'
 require 'aldous/dispatch/determine_response_type'
 require 'aldous/dispatch/determine_response_status'
 
 module Aldous
   class ResultDispatcher
+    class << self
+      def execute(controller, result, result_to_response_type_mapping)
+        self.new(controller, result, result_to_response_type_mapping).perform
+      end
+    end
+
     attr_reader :controller, :result, :result_to_response_type_mapping
 
     def initialize(controller, result, result_to_response_type_mapping)
@@ -14,9 +19,18 @@ module Aldous
       @result_to_response_type_mapping = result_to_response_type_mapping
     end
 
+    # Rethink the defaults, maybe I should pull them out completely for now???
+    # if precondition failed due to unauthenticated for example can I still
+    # produce the right status for the response???
     def perform
-      action_response_type_class = response_type_class || determine_response_type.execute
+      action_response_type_class = determine_response_type.execute || default_response_type_class
       response_status = determine_response_status.execute
+
+      # TODO
+      # we can check a few things here
+      # - that we actually have a response_type_class to instantiate if not then we can error out more gracefully
+      # - if response_type_class is instatiated we can check that it has an action method i.e. it implements one of the allowed interfaces
+
       action_response_type_class.new(result, controller.view_context).action(controller).execute(response_status)
     rescue => e
       Dispatch::HandleError.new(e, controller).perform
@@ -24,16 +38,12 @@ module Aldous
 
     private
 
-    def response_type_class
-      @response_type_class ||= default_response_types.response_type_for(result.class)
+    def default_response_type_class
+      @default_response_type_class ||= default_response_types.response_type_for(result.class)
     end
 
     def default_response_types
-      @default_response_types ||= Dispatch::RequestFormatToDefaultResponseTypes.new.default_response_types_for(request_format)
-    end
-
-    def request_format
-      @request_format ||= ::Aldous::ControllerData.new(controller).request_format
+      @default_response_types ||= Dispatch::Request::FindDefaultResponseTypes.new(controller.request).execute
     end
 
     def determine_response_type
