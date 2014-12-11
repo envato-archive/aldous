@@ -8,7 +8,9 @@ module Aldous
         # PrependedMethods module below calls super which will delegate to
         # the perform method of the class where the ControllerService module
         # is included
-        base.prepend PrependedMethods
+        base.class_eval do
+          prepend PrependedMethods
+        end
       end
 
       def preconditions

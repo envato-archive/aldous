@@ -8,6 +8,7 @@ module Aldous
         # Failure then we'll have a predicate method called failure? which will
         # return false on the base class and true on the actual child class.
         def inherited(child)
+          return if child.name == nil # unnamed class
           child_class_name_as_predicate = "#{underscore(child.name.split("::").last)}?"
 
           add_predicate_method_to_class(Aldous::Result::Base, child_class_name_as_predicate, false)

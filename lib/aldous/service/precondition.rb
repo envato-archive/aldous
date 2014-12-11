@@ -14,6 +14,10 @@ module Aldous
           ::Aldous::Result.const_set(failure_result_class_name, Class.new(::Aldous::Result::PreconditionFailure))
         end
       end
+
+      def check
+        raise "Preconditions must override the 'check' method"
+      end
     end
   end
 end

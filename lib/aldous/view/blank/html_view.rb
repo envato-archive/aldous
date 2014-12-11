@@ -8,7 +8,7 @@ module Aldous
 
         def template
           {
-            html: "<div></div>".html_safe, layout: true
+            html: "", layout: true
           }
         end
       end
