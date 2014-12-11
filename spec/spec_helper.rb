@@ -1,3 +1,7 @@
+require 'aldous'
+
+Dir[File.join(File.dirname(__FILE__), 'support', '**', "*.rb").to_s].each {|file| require file }
+
 RSpec.configure do |config|
   config.filter_run :focus
   config.run_all_when_everything_filtered = true

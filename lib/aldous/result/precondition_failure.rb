@@ -1,11 +1,9 @@
 require 'aldous/result/base'
+require 'aldous/result/failure'
 
 module Aldous
   module Result
-    class PreconditionFailure < Base
-      def failure?
-        true
-      end
+    class PreconditionFailure < Failure
     end
   end
 end

@@ -2,6 +2,7 @@ require 'aldous/version'
 
 require 'aldous/configuration'
 
+require 'aldous/respondable'
 require 'aldous/headable'
 require 'aldous/redirectable'
 require 'aldous/renderable'

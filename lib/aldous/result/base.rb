@@ -1,6 +1,10 @@
+require 'aldous/result/base/predicate_methods_for_inheritance'
+
 module Aldous
   module Result
     class Base
+      extend PredicateMethodsForInheritance
+
       # so we have access to the original params that were passed in
       attr_reader :_options
 
@@ -29,30 +33,6 @@ module Aldous
             end
           end
         end
-      end
-
-      def failure?
-        false
-      end
-
-      def success?
-        false
-      end
-
-      def unauthorized?
-        false
-      end
-
-      def unauthenticated?
-        false
-      end
-
-      def not_found?
-        false
-      end
-
-      def server_error?
-        false
       end
 
       def errors

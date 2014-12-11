@@ -1,0 +1,6 @@
+Primary
+
+
+
+Secondary
+- spec out Aldous::Result::Base
