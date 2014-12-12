@@ -1,5 +1,5 @@
 RSpec.describe Aldous::Renderable do
-  class Dummy
+  class Aldous::Renderable::Dummy
     include Aldous::Renderable
 
     def template
@@ -7,7 +7,7 @@ RSpec.describe Aldous::Renderable do
     end
   end
 
-  subject(:renderable) {Dummy.new(result, view_context)}
+  subject(:renderable) {Aldous::Renderable::Dummy.new(result, view_context)}
 
   let(:result) {double("result")}
   let(:view_context) {double("view context")}

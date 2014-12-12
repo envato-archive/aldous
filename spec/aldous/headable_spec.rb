@@ -1,9 +1,9 @@
 RSpec.describe Aldous::Headable do
-  class Dummy
+  class Aldous::Headable::Dummy
     include Aldous::Headable
   end
 
-  subject(:headable) {Dummy.new(result, view_context)}
+  subject(:headable) {Aldous::Headable::Dummy.new(result, view_context)}
 
   let(:result) {double("result")}
   let(:view_context) {double("view context")}

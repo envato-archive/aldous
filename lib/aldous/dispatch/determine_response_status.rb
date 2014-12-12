@@ -17,7 +17,7 @@ module Aldous
 
       def execute
         result_class = result.class
-        if result.cause && result.cause.kind_of?(::Aldous::Result::Base)
+        if result.respond_to?(:cause) && result.cause && result.cause.kind_of?(::Aldous::Result::Base)
           result_class = result.cause.class
         end
         result_to_status[result_class] || :internal_server_error

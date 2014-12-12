@@ -1,5 +1,5 @@
 RSpec.describe Aldous::Redirectable do
-  class Dummy
+  class Aldous::Redirectable::Dummy
     include Aldous::Redirectable
 
     def location
@@ -7,7 +7,7 @@ RSpec.describe Aldous::Redirectable do
     end
   end
 
-  subject(:redirectable) {Dummy.new(result, view_context)}
+  subject(:redirectable) {Aldous::Redirectable::Dummy.new(result, view_context)}
 
   let(:result) {double("result")}
   let(:view_context) {double("view context")}

@@ -1,14 +1,16 @@
 module Aldous
   module Dispatch
-    class RequestWrapper
-      attr_reader :request
+    module Request
+      class RequestWrapper
+        attr_reader :request
 
-      def initialize(request)
-        @request = request
-      end
+        def initialize(request)
+          @request = request
+        end
 
-      def format
-        (request.format || 'html').to_sym
+        def format
+          (request.format || 'html').to_sym
+        end
       end
     end
   end

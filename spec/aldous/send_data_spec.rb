@@ -1,5 +1,5 @@
 RSpec.describe Aldous::SendData do
-  class Dummy
+  class Aldous::SendData::Dummy
     include Aldous::SendData
 
     def data
@@ -11,7 +11,7 @@ RSpec.describe Aldous::SendData do
     end
   end
 
-  subject(:send_data) {Dummy.new(result, view_context)}
+  subject(:send_data) {Aldous::SendData::Dummy.new(result, view_context)}
 
   let(:result) {double("result")}
   let(:view_context) {double("view context")}
