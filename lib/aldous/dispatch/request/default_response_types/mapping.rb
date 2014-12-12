@@ -21,6 +21,10 @@ module Aldous
             {}
           end
 
+          def default_view
+            raise "You must override the default view"
+          end
+
           def default_response_types
             {
               ::Aldous::Result::Unauthenticated   => default_view,

@@ -19,8 +19,12 @@ module Aldous
 
       module PrependedMethods
         def perform
-          check_preconditions_result = CheckPreconditions.new(preconditions).perform
-          return check_preconditions_result unless check_preconditions_result.success?
+          # don't even bother trying to check the preconditions if there are
+          # none
+          if preconditions == nil || preconditions.empty?
+            check_preconditions_result = CheckPreconditions.new(preconditions).perform
+            return check_preconditions_result unless check_preconditions_result.success?
+          end
 
           if defined?(super)
             super
