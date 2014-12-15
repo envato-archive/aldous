@@ -18,6 +18,7 @@ require 'aldous/result/success'
 require 'aldous/result/unauthenticated'
 require 'aldous/result/unauthorized'
 
+require 'aldous/controller_service'
 require 'aldous/controller_service/perform_with_rescue'
 require 'aldous/controller_service/precondition'
 require 'aldous/controller_service/check_preconditions'
