@@ -10,7 +10,24 @@ require 'aldous/send_data'
 
 module Aldous
   class ResultDispatcher
+    class Dsl
+      attr_reader :controller_service_class
+
+      def initialize(controller_service_class)
+        @controller_service_class = controller_service_class
+      end
+
+      def execute(controller, result_to_response_type_mapping)
+        result = controller_service_class.new(params: controller.params).perform
+        Aldous::ResultDispatcher.execute(controller, result, result_to_response_type_mapping)
+      end
+    end
+
     class << self
+      def for(controller_service_class)
+        Dsl.new(controller_service_class)
+      end
+
       def execute(controller, result, result_to_response_type_mapping)
         self.new(controller, result, result_to_response_type_mapping).perform
       end

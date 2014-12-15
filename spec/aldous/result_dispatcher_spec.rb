@@ -21,6 +21,20 @@ RSpec.describe Aldous::ResultDispatcher do
     end
   end
 
+  describe "::for" do
+    before do
+      allow(described_class::Dsl).to receive(:new).and_return(dsl)
+    end
+
+    let(:dsl) {instance_double(described_class::Dsl)}
+    let(:controller_service_class) {double 'controller service class'}
+
+    it "instantiates a #{described_class::Dsl} object" do
+      expect(described_class::Dsl).to receive(:new).with(controller_service_class)
+      described_class.for(controller_service_class)
+    end
+  end
+
   describe "#perform" do
     let(:dispatcher) { described_class.new(controller, result, result_to_response_type_mapping) }
 
