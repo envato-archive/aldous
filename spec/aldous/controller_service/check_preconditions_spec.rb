@@ -1,9 +1,9 @@
-RSpec.describe Aldous::Service::CheckPreconditions do
+RSpec.describe Aldous::ControllerService::CheckPreconditions do
   class BadPrecondition
   end
 
   class SuccessPrecondition
-    include Aldous::Service::Precondition
+    include Aldous::ControllerService::Precondition
 
     def check
       Aldous::Result::Success.new
@@ -11,7 +11,7 @@ RSpec.describe Aldous::Service::CheckPreconditions do
   end
 
   class FailurePrecondition
-    include Aldous::Service::Precondition
+    include Aldous::ControllerService::Precondition
 
     def check
       Aldous::Result::Failure.new(hello: 'world')

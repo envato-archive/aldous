@@ -1,7 +1,7 @@
 require 'aldous/result/precondition_failure'
 
 module Aldous
-  module Service
+  module ControllerService
     module Precondition
       # when the module is included we create a FailureResult class named after
       # the procondition inside the result module e.g. if the precondition

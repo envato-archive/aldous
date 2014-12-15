@@ -1,10 +1,10 @@
-RSpec.describe Aldous::Service::PerformWithRescue do
+RSpec.describe Aldous::ControllerService::PerformWithRescue do
   class BadDummy
-    include Aldous::Service::PerformWithRescue
+    include Aldous::ControllerService::PerformWithRescue
   end
 
   class GoodDummy
-    include Aldous::Service::PerformWithRescue
+    include Aldous::ControllerService::PerformWithRescue
 
     def perform
       'hello'
@@ -12,7 +12,7 @@ RSpec.describe Aldous::Service::PerformWithRescue do
   end
 
   class ErrorDummy
-    include Aldous::Service::PerformWithRescue
+    include Aldous::ControllerService::PerformWithRescue
 
     def perform
       raise 'hello'
@@ -36,16 +36,16 @@ RSpec.describe Aldous::Service::PerformWithRescue do
   end
 
   context "precondition checks" do
-    let(:check_preconditions) {instance_double(Aldous::Service::CheckPreconditions, perform: check_preconditions_result)}
+    let(:check_preconditions) {instance_double(Aldous::ControllerService::CheckPreconditions, perform: check_preconditions_result)}
     let(:check_preconditions_result) {double "check precondition result", success?: check_preconditions_result_success}
     let(:check_preconditions_result_success) {true}
 
     before do
-      allow(Aldous::Service::CheckPreconditions).to receive(:new).with([]).and_return(check_preconditions)
+      allow(Aldous::ControllerService::CheckPreconditions).to receive(:new).with([]).and_return(check_preconditions)
     end
 
     it "performs the checks" do
-      expect(Aldous::Service::CheckPreconditions).to receive(:new).with([]).and_return(check_preconditions)
+      expect(Aldous::ControllerService::CheckPreconditions).to receive(:new).with([]).and_return(check_preconditions)
       GoodDummy.new.perform
     end
 

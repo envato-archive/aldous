@@ -18,9 +18,10 @@ require 'aldous/result/success'
 require 'aldous/result/unauthenticated'
 require 'aldous/result/unauthorized'
 
-require 'aldous/service/perform_with_rescue'
-require 'aldous/service/precondition'
-require 'aldous/service/check_preconditions'
+require 'aldous/controller_service/perform_with_rescue'
+require 'aldous/controller_service/precondition'
+require 'aldous/controller_service/check_preconditions'
+require 'aldous/controller_service/param_present_precondition'
 
 require 'aldous/view/blank/atom_view'
 require 'aldous/view/blank/json_view'

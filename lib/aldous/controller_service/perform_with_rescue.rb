@@ -1,5 +1,5 @@
 module Aldous
-  module Service
+  module ControllerService
     module PerformWithRescue
       def self.included(base)
         # we prepend a module into the base class so that we can use super

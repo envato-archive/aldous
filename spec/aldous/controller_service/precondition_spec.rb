@@ -1,6 +1,6 @@
-RSpec.describe Aldous::Service::Precondition do
+RSpec.describe Aldous::ControllerService::Precondition do
   class Dummy
-    include Aldous::Service::Precondition
+    include Aldous::ControllerService::Precondition
   end
 
   it "creates a Failure result class named after the class where the module was included" do
