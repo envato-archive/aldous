@@ -2,6 +2,8 @@ require 'aldous/version'
 
 require 'aldous/configuration'
 
+require 'aldous/errors/user_error'
+
 require 'aldous/respondable'
 require 'aldous/headable'
 require 'aldous/redirectable'
@@ -18,11 +20,17 @@ require 'aldous/result/success'
 require 'aldous/result/unauthenticated'
 require 'aldous/result/unauthorized'
 
-require 'aldous/controller_service'
+require 'aldous/service/error_raising'
+require 'aldous/service/error_free'
+require 'aldous/service/validating'
+
+require 'aldous/controller_service/params_constructor'
+require 'aldous/controller_service/default_result_options'
+require 'aldous/controller_service/has_strong_params'
+require 'aldous/controller_service/has_preconditions'
 require 'aldous/controller_service/perform_with_rescue'
 require 'aldous/controller_service/precondition'
 require 'aldous/controller_service/check_preconditions'
-require 'aldous/controller_service/param_present_precondition'
 
 require 'aldous/view/blank/atom_view'
 require 'aldous/view/blank/json_view'

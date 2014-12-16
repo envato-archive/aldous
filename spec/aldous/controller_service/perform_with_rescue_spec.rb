@@ -7,15 +7,42 @@ RSpec.describe Aldous::ControllerService::PerformWithRescue do
     include Aldous::ControllerService::PerformWithRescue
 
     def perform
-      'hello'
+      Aldous::Result::Success.new
     end
   end
 
   class ErrorDummy
     include Aldous::ControllerService::PerformWithRescue
 
+    def default_result_options
+      {hello: nil}
+    end
+
     def perform
       raise 'hello'
+    end
+  end
+
+  class StrongParamsErrorDummy
+    include Aldous::ControllerService::PerformWithRescue
+
+    def strong_params
+      raise 'hello'
+    end
+
+    def perform
+    end
+  end
+
+  class DefaultOptionsDummy
+    include Aldous::ControllerService::PerformWithRescue
+
+    def default_result_options
+      {hello: nil}
+    end
+
+    def perform
+      Aldous::Result::Success.new
     end
   end
 
@@ -24,15 +51,50 @@ RSpec.describe Aldous::ControllerService::PerformWithRescue do
   end
 
   it "expects a 'perform' method to be defined" do
-    expect(BadDummy.new.perform).to be_kind_of Aldous::Result::ServerError
+    expect{BadDummy.new.perform}.to raise_error
   end
 
   it "calls 'perform' method defined on class" do
-    expect(GoodDummy.new.perform).to eq 'hello'
+    expect(GoodDummy.new.perform).to be_kind_of Aldous::Result::Success
   end
 
   it "rescues errors in 'perform' method defined on class" do
     expect(ErrorDummy.new.perform).to be_kind_of Aldous::Result::ServerError
+  end
+
+  it "has strong params" do
+    expect(GoodDummy.new).to be_kind_of Aldous::ControllerService::HasStrongParams
+  end
+
+  it "has preconditions" do
+    expect(GoodDummy.new).to be_kind_of Aldous::ControllerService::HasPreconditions
+  end
+
+  it "has default result options" do
+    expect(GoodDummy.new).to be_kind_of Aldous::ControllerService::DefaultResultOptions
+  end
+
+  context "default options on every result" do
+    it "has default options on a success result" do
+      expect{DefaultOptionsDummy.new.perform.hello}.to_not raise_error
+    end
+
+    it "has default options on an error result" do
+      expect{ErrorDummy.new.perform.hello}.to_not raise_error
+    end
+  end
+
+  context "strong param checks" do
+    let(:service) {GoodDummy.new}
+
+    it "performs and memoizes the strong params checks" do
+      service.perform
+      expect(service.instance_variable_get(:"@strong_params")).to_not be_nil
+    end
+
+    it "returns a failure result when strong params checks fail" do
+      expect(StrongParamsErrorDummy.new.perform).to be_kind_of Aldous::Result::Failure
+    end
   end
 
   context "precondition checks" do
