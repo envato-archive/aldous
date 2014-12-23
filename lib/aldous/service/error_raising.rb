@@ -30,13 +30,14 @@ module Aldous
       module PrependedMethods
         def perform!
           if defined?(super)
+            return super if Aldous.config.test_mode
             begin
               unless validator.valid?
                 result = validation_failure_result
                 return result.class.new(default_result_options.merge(result._options))
               end
-
               result = super
+              raise "Return value of '#{__method__}' must be a type of #{::Aldous::Result}" unless result.kind_of?(::Aldous::Result::Base)
               result.class.new(default_result_options.merge(result._options))
             rescue => e
               raise raisable_error.new(e.message)

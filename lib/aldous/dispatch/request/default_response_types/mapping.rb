@@ -27,10 +27,11 @@ module Aldous
 
           def default_response_types
             {
-              ::Aldous::Result::Unauthenticated   => default_view,
-              ::Aldous::Result::Unauthorized      => default_view,
-              ::Aldous::Result::NotFound          => default_view,
-              ::Aldous::Result::ServerError       => default_view,
+              ::Aldous::Result::Unauthenticated       => default_view,
+              ::Aldous::Result::Unauthorized          => default_view,
+              ::Aldous::Result::NotFound              => default_view,
+              ::Aldous::Result::ServerError           => default_view,
+              ::Aldous::Result::StrongParamsFailure   => default_view,
             }
           end
         end

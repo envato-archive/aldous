@@ -34,6 +34,7 @@ module Aldous
           ::Aldous::Result::Success               => :ok,
           ::Aldous::Result::Failure               => :unprocessable_entity,
           ::Aldous::Result::PreconditionFailure   => :unprocessable_entity,
+          ::Aldous::Result::StrongParamsFailure   => :unprocessable_entity,
         }
       end
     end

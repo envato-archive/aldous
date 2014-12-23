@@ -31,7 +31,7 @@ module Aldous
             return Aldous::Result::Success.new
           rescue => e
             ::Aldous.config.error_reporter.report(e)
-            return Aldous::Result::Failure.new(error: e.message)
+            return Aldous::Result::StrongParamsFailure.new(error: e.message)
           end
         end
       end

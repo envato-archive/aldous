@@ -25,13 +25,12 @@ module Aldous
       module PrependedMethods
         def perform
           if defined?(super)
+            return super if Aldous.config.test_mode
             begin
               check_strong_params_result = check_strong_params
               return check_strong_params_result unless check_strong_params_result.success?
 
-              if preconditions == nil || preconditions.empty?
-                return check_preconditions_result unless check_preconditions_result.success?
-              end
+              return check_preconditions_result unless check_preconditions_result.success?
 
               # ensure that all results returned always have the default options
               result = super

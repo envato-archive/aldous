@@ -41,6 +41,7 @@ RSpec.describe Aldous::Dispatch::Request::DefaultResponseTypes::Mapping do
         ::Aldous::Result::Unauthorized      => 'hello',
         ::Aldous::Result::NotFound          => 'hello',
         ::Aldous::Result::ServerError       => 'hello',
+        ::Aldous::Result::StrongParamsFailure => "hello"
       })
     end
   end
