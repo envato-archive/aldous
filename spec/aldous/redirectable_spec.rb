@@ -20,7 +20,7 @@ RSpec.describe Aldous::Redirectable do
     end
 
     it 'creates a redirect response action with the relevant parameters' do
-      expect(Aldous::ResponseAction::Redirect).to receive(:new).with(redirectable.location, controller, result)
+      expect(Aldous::ResponseAction::Redirect).to receive(:new).with(redirectable.location, controller, result, :found)
       redirectable.action(controller)
     end
   end

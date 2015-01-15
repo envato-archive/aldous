@@ -1,10 +1,11 @@
 RSpec.describe Aldous::ResponseAction::Redirect do
-  subject(:respondable) {described_class.new(location, controller, result)}
+  subject(:respondable) {described_class.new(location, controller, result, provided_response_status)}
 
   let(:location) {"hello"}
   let(:controller) {double 'controller', redirect_to: nil}
   let(:result) {"blah"}
   let(:response_status) {'world'}
+  let(:provided_response_status) { :found }
 
   let(:flash) {double("flash", set_error: nil)}
 
@@ -14,7 +15,7 @@ RSpec.describe Aldous::ResponseAction::Redirect do
     end
 
     it "calls redirect_to on controller with the relevant options" do
-      expect(controller).to receive(:redirect_to).with(location, {status: 'world'})
+      expect(controller).to receive(:redirect_to).with(location, {status: provided_response_status})
       respondable.execute(response_status)
     end
 
