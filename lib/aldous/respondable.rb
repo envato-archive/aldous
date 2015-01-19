@@ -6,5 +6,9 @@ module Aldous
       @result = result
       @view_context = view_context
     end
+
+    def build_result(data_hash)
+      result.class.new(data_hash)
+    end
   end
 end
