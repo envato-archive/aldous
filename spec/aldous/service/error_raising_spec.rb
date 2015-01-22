@@ -20,7 +20,7 @@ RSpec.describe Aldous::Service::ErrorRaising do
       end
 
       def perform!
-        raise 'hello'
+        raise 'real_error'
       end
     end
 
@@ -84,8 +84,20 @@ RSpec.describe Aldous::Service::ErrorRaising do
   end
 
   context "when errors occur" do
-    it "returns a failure result" do
+    it "raises an error of the type that was configured" do
       expect{ErrorRaising::ErrorDummy.new.perform!}.to raise_error(Aldous::Errors::UserError)
+    end
+
+    describe '#perform' do
+      subject(:perform) { ErrorRaising::ErrorDummy.new.perform }
+
+      it 'returns a Failure' do
+        expect(perform).to be_a Aldous::Result::Failure
+      end
+
+      it 'includes the actual error in the result’s errors' do
+        expect(perform.errors.first.message).to eq 'real_error'
+      end
     end
   end
 end

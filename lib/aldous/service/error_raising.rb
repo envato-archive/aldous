@@ -51,7 +51,7 @@ module Aldous
           perform!
         rescue => e
           ::Aldous.config.error_reporter.report(e.cause || e)
-          ::Aldous::Result::Failure.new(default_result_options)
+          ::Aldous::Result::Failure.new(default_result_options.merge(errors: [e]))
         end
       end
     end
