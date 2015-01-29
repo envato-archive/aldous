@@ -5,7 +5,7 @@ module Aldous
     private
 
     def perform_with *args
-      @result = _service_class.new(*args).perform_with
+      @result = _service_class.new(*args).perform
     end
 
     def dispatch_with(mapping)
