@@ -58,12 +58,8 @@ module Aldous
     end
 
     def ensure_response_type_implements_the_right_interfaces(response_type)
-      response_type_modules = [::Aldous::Headable,
-                               ::Aldous::Redirectable,
-                               ::Aldous::Renderable,
-                               ::Aldous::SendData]
-      unless response_type_modules.any?{|m| response_type.kind_of?(m)}
-        raise "Response type class provided for #{result.class.name} must implement one of #{response_type_modules.join(',')}"
+      unless response_type.respond_to?(:action)
+        raise "Response type class provided for #{result.class.name} must implement the #action method"
       end
     end
 

@@ -1,6 +1,3 @@
-require 'aldous/respondable'
-require 'aldous/response_action/render'
-
 module Aldous
   module Renderable
     include Respondable

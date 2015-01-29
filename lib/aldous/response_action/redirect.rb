@@ -1,5 +1,3 @@
-require 'aldous/response_action/flash'
-
 module Aldous
   module ResponseAction
     class Redirect

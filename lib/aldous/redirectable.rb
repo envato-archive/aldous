@@ -1,6 +1,3 @@
-require 'aldous/respondable'
-require 'aldous/response_action/redirect'
-
 module Aldous
   module Redirectable
     include Respondable

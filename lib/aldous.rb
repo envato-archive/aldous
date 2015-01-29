@@ -9,6 +9,8 @@ require 'aldous/headable'
 require 'aldous/redirectable'
 require 'aldous/renderable'
 require 'aldous/send_data'
+require 'aldous/controller_sugar'
+require 'aldous/with_controller_sugar'
 
 require 'aldous/result_dispatcher'
 
@@ -33,6 +35,13 @@ require 'aldous/controller_service/perform_with_rescue'
 require 'aldous/controller_service/precondition'
 require 'aldous/controller_service/check_preconditions'
 require 'aldous/controller_service/param_present_precondition'
+
+require 'aldous/response_action/render'
+require 'aldous/response_action/redirect'
+require 'aldous/response_action/send_data'
+require 'aldous/response_action/head'
+require 'aldous/response_action/flash'
+require 'aldous/response_action/request_http_basic_authentication'
 
 require 'aldous/view/blank/atom_view'
 require 'aldous/view/blank/json_view'

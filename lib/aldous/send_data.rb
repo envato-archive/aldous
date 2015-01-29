@@ -1,5 +1,4 @@
 require 'aldous/respondable'
-require 'aldous/response_action/send_data'
 
 module Aldous
   module SendData
