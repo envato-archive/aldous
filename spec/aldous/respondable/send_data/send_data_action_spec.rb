@@ -1,4 +1,4 @@
-RSpec.describe Aldous::ResponseAction::SendData do
+RSpec.describe Aldous::Respondable::SendData::SendDataAction do
   subject(:respondable) {described_class.new(data, options, controller, result)}
 
   let(:data) { 'hello' }

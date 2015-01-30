@@ -1,11 +1,9 @@
-require 'aldous/renderable'
+require 'aldous/respondable/renderable'
 
 module Aldous
   module View
     module Blank
-      class AtomView
-        include Renderable
-
+      class AtomView < Respondable::Renderable
         def template
         end
       end
