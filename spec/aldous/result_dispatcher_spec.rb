@@ -32,7 +32,7 @@ RSpec.describe Aldous::ResultDispatcher do
     let(:response_type_class) {double "response type class", new: response_type}
     let(:response_status) {double 'response status'}
 
-    let(:response_type) {double "response type", action: response_action}
+    let(:response_type) {double "response type" }
     let(:response_action) {double "response action", execute: nil}
 
     before do
@@ -43,9 +43,7 @@ RSpec.describe Aldous::ResultDispatcher do
 
     context "when response type class is found via the mapping" do
       context "and response type class implements one of the valid interfaces" do
-        before do
-          response_type.extend(Aldous::Renderable)
-        end
+        let(:response_type) { double 'response type', action: response_action }
 
         it "gets the action from the response type" do
           expect(response_type).to receive(:action).with(controller)
@@ -78,9 +76,7 @@ RSpec.describe Aldous::ResultDispatcher do
 
       context "but found via configured defaults" do
         context "and response type class implements one of the valid interfaces" do
-          before do
-            response_type.extend(Aldous::Renderable)
-          end
+          let(:response_type) { double 'response type', action: response_action }
 
           it "gets the action from the response type" do
             expect(response_type).to receive(:action).with(controller)

@@ -1,11 +1,9 @@
-require 'aldous/renderable'
+require 'aldous/respondable/renderable'
 
 module Aldous
   module View
     module Blank
-      class JsonView
-        include Renderable
-
+      class JsonView < Respondable::Renderable
         def template
           {
             json: {}

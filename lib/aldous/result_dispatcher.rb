@@ -3,10 +3,7 @@ require 'aldous/dispatch/request/find_default_response_types'
 require 'aldous/dispatch/determine_response_type'
 require 'aldous/dispatch/determine_response_status'
 
-require 'aldous/headable'
-require 'aldous/redirectable'
-require 'aldous/renderable'
-require 'aldous/send_data'
+require 'aldous/respondable/base'
 
 module Aldous
   class ResultDispatcher
@@ -59,7 +56,7 @@ module Aldous
 
     def ensure_response_type_implements_the_right_interfaces(response_type)
       unless response_type.respond_to?(:action)
-        raise "Response type class provided for #{result.class.name} must implement the #action method"
+        raise "Response type class provided for #{result.class.name} must implement the #action method, i.e. an #{Aldous::Respondable::Base.name} subclass"
       end
     end
 
