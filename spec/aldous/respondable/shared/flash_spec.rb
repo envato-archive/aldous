@@ -1,4 +1,4 @@
-RSpec.describe Aldous::ResponseAction::Flash do
+RSpec.describe Aldous::Respondable::Shared::Flash do
   let(:flash) {described_class.new(result, flash_container)}
 
   let(:controller) {double 'controller', flash: flash_container}
@@ -6,20 +6,6 @@ RSpec.describe Aldous::ResponseAction::Flash do
   let(:errors) {['1', '2']}
   let(:flash_container) {double 'flash container', now: flash_now}
   let(:flash_now) { {} }
-
-  describe "::for_render" do
-    it "build a flash object for render" do
-      expect(described_class).to receive(:new).with(result, flash_now)
-      described_class.for_render(controller, result)
-    end
-  end
-
-  describe "::for_redirect" do
-    it "build a flash object for redirect" do
-      expect(described_class).to receive(:new).with(result, flash_container)
-      described_class.for_redirect(controller, result)
-    end
-  end
 
   describe "#set_error" do
     context "when errors exist" do

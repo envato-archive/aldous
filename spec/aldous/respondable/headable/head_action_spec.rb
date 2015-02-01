@@ -1,4 +1,4 @@
-RSpec.describe Aldous::ResponseAction::Head do
+RSpec.describe Aldous::Respondable::Headable::HeadAction do
   subject(:respondable) {described_class.new(controller)}
 
   let(:controller) {double 'controller', head: nil}

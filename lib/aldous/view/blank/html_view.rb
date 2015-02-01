@@ -1,11 +1,9 @@
-require 'aldous/renderable'
+require 'aldous/respondable/renderable'
 
 module Aldous
   module View
     module Blank
-      class HtmlView
-        include Renderable
-
+      class HtmlView < Respondable::Renderable
         def template
           {
             html: "", layout: true

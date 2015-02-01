@@ -4,8 +4,8 @@ RSpec.describe Aldous::View::Blank::HtmlView do
   let(:result) {double("result")}
   let(:view_context) {double("view context")}
 
-  it "includes the Renderable module" do
-    expect(described_class.ancestors.include?(Aldous::Renderable)).to be_truthy
+  it "inherits from Renderable" do
+    expect(described_class.ancestors.include?(Aldous::Respondable::Renderable)).to be_truthy
   end
 
   it "implements the 'template' method" do
