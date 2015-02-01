@@ -4,7 +4,7 @@ module Aldous
   module ControllerSugar
     private
 
-    def perform *args
+    def perform_with *args
       @result = _service_class.new(*args).perform
     end
 
@@ -13,7 +13,7 @@ module Aldous
     end
 
     def dispatch_with_params(mapping)
-      perform(params: params)
+      perform_with(params: params)
       dispatch_with mapping
     end
 
