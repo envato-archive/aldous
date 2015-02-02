@@ -2,6 +2,8 @@ require 'aldous/version'
 
 require 'aldous/configuration'
 
+require 'aldous/conductor'
+
 require 'aldous/errors/user_error'
 
 require 'aldous/respondable/base'
@@ -10,9 +12,6 @@ require 'aldous/respondable/redirectable'
 require 'aldous/respondable/renderable'
 require 'aldous/respondable/send_data'
 require 'aldous/respondable/request_http_basic_authentication'
-
-require 'aldous/controller_sugar'
-require 'aldous/with_controller_sugar'
 
 require 'aldous/result_dispatcher'
 
