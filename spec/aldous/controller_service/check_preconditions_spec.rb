@@ -48,7 +48,7 @@ RSpec.describe Aldous::ControllerService::CheckPreconditions do
       let(:precondition2) {FailurePrecondition.new}
 
       it "returns the relevant precondition failure result" do
-        expect(check_preconditions.perform).to be_kind_of Aldous::Result::FailurePreconditionFailure
+        expect(check_preconditions.perform).to be_kind_of FailurePrecondition::Failure
       end
 
       it "returns the precondition failure with the original failure result as cause" do

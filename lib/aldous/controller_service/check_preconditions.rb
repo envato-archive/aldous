@@ -32,8 +32,7 @@ module Aldous
       end
 
       def precondition_failure_result(precondition)
-        failure_result_class_name = "#{precondition.class.name.split('::').last}Failure"
-        ::Aldous::Result.const_get(failure_result_class_name)
+        precondition.class.const_get('Failure')
       rescue
         nil
       end
