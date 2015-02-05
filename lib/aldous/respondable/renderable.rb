@@ -13,11 +13,11 @@ module Aldous
       end
 
       def template_with_locals(extra_locals = {})
-        if template.kind_of?(Hash)
-          template.tap do |t|
-            t[:locals] ||= {}
-            t[:locals] = t[:locals].merge(extra_locals || {})
-          end
+        local_template = template
+        if local_template.kind_of?(Hash)
+          local_template[:locals] ||= {}
+          local_template[:locals] = local_template[:locals].merge(extra_locals || {})
+          local_template
         else
           raise Errors::UserError.new("'template' method must return a Hash")
         end
