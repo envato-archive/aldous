@@ -9,7 +9,18 @@ module Aldous
       end
 
       def template
-        raise RuntimeError.new("Renderable objects must define a 'template' method")
+        raise Errors::UserError.new("Renderable objects must define a 'template' method")
+      end
+
+      def template_with_locals(extra_locals = {})
+        local_template = template
+        if local_template.kind_of?(Hash)
+          local_template[:locals] ||= {}
+          local_template[:locals] = local_template[:locals].merge(extra_locals || {})
+          local_template
+        else
+          raise Errors::UserError.new("'template' method must return a Hash")
+        end
       end
 
       private
