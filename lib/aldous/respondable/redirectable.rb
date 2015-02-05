@@ -9,7 +9,7 @@ module Aldous
       end
 
       def location
-        raise RuntimeError.new("Redirectable objects must define a 'location' method")
+        raise Errors::UserError.new("Redirectable objects must define a 'location' method")
       end
 
       def status

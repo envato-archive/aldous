@@ -8,11 +8,11 @@ module Aldous
       end
 
       def data
-        raise RuntimeError.new("SendData objects must define a 'data' method")
+        raise Errors::UserError.new("SendData objects must define a 'data' method")
       end
 
       def options
-        raise RuntimeError.new("SendData objects must define an 'options' method")
+        raise Errors::UserError.new("SendData objects must define an 'options' method")
       end
 
       private
