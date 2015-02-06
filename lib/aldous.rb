@@ -40,6 +40,7 @@ require 'aldous/controller_service/param_present_precondition'
 require 'aldous/view/blank/atom_view'
 require 'aldous/view/blank/json_view'
 require 'aldous/view/blank/html_view'
+require 'aldous/view/blank/text_view'
 
 module Aldous
   class << self
