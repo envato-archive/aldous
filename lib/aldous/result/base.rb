@@ -24,12 +24,14 @@ module Aldous
         end
 
         self.class.class_eval do
-          options.each_pair do |key, value|
+          options.each_key do |key|
             next if key.to_s == 'errors' ||
               key.to_s == 'messages' ||
               key.to_s == 'cause' # cause we already have methods for these
+            # do nothing if method is already defined
+            next if instance_methods(false).include?(key.to_sym)
             define_method key do
-              value
+              @_options[key]
             end
           end
         end
