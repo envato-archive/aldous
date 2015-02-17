@@ -4,7 +4,9 @@ require 'aldous/controller_service/precondition'
 
 module Aldous
   module ControllerService
-    class CheckPreconditions
+    class CheckPreconditionsService
+      include Aldous::Service
+
       attr_reader :preconditions
 
       def initialize(preconditions)

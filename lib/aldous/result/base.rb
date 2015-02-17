@@ -14,7 +14,7 @@ module Aldous
         @_options = options
         # ensure that any errors or messages end up in the appropriate array
         options.each_pair do |key, value|
-          if key.to_s == 'error' || key.to_s == 'errors'
+          if key.to_s == 'errors'
             @errors = [value].flatten.compact
           elsif key.to_s == 'message' || key.to_s == 'messages'
             @messages = [value].flatten.compact
