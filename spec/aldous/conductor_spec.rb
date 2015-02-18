@@ -1,8 +1,7 @@
 RSpec.describe Aldous::Conductor do
-
   let(:conductor) { described_class.new(controller, mapping) }
-  let(:perform)   { conductor.perform(*args) }
-  let(:args)      do
+  let(:perform) { conductor.perform(*args) }
+  let(:args) do
     [
       :arg_one,
       :arg_two, {
@@ -10,93 +9,57 @@ RSpec.describe Aldous::Conductor do
       }
     ]
   end
-
   let(:controller) {
     double "controller", params: {
-      id:    123,
-      class: controller_class,
-      action: double('example', {classify: 'Example'})
-    }
+        id:     123,
+        action: double('example', { classify: 'Example' })
+      }
   }
-
   let(:controller_service) do
     double 'controller_service', perform: result, preconditions: preconditions
   end
-
-  let(:result) do
-    double 'result'
-  end
-
-  let(:mapping) do
-    {
-      String => Object,
-    }
-  end
-
+  let(:result) { double 'result' }
+  let(:mapping) { { String => Object } }
   let(:preconditions) { [] }
+  before do
+    class ExampleControllerClass
+      class ExampleService
+        include Aldous::ControllerService
+      end
 
-  #
-  # define fake classes
-  #
-
-  let!(:controller_class) do
-    if defined? ExampleControllerClass
-      ExampleControllerClass
-    else
-      Object.const_set('ExampleControllerClass', Class.new)
-    end
-  end
-
-  let!(:controller_service_class) do
-    if defined? ExampleControllerClass::ExampleService
-      ExampleControllerClass::ExampleService
-    else
-      controller_class.const_set('ExampleService', Class.new)
-    end
-  end
-
-  let!(:precondition_class) do
-    if defined? ExampleControllerClass::ExamplePrecondition
-      ExampleControllerClass::ExamplePrecondition
-    else
-      controller_class.const_set('ExamplePrecondition', Class.new).instance_eval do
+      class ExamplePrecondition
         include Aldous::ControllerService::Precondition
       end
     end
-  end
 
+    allow(controller).to receive(:class) { ExampleControllerClass }
+    allow(ExampleControllerClass::ExampleService).to receive(:build) { controller_service }
+    allow(Aldous::ResultDispatcher).to receive(:execute)
+  end
   after do
-    # clean up object space
     Object.send :remove_const, 'ExampleControllerClass'
   end
 
-  #
-  #
-  #
-
-  before do
-    allow(controller).to receive(:class).and_return(controller_class)
-    allow(controller_service_class).to receive(:new).and_return(controller_service)
-    allow(Aldous::ResultDispatcher).to receive(:execute)
-  end
-
-  describe "#perform" do
+  describe '#perform' do
 
     it 'builds a controller service by inspecting params[:action]' do
-      expect(ExampleControllerClass::ExampleService).to receive(:new)
+      expect(ExampleControllerClass::ExampleService).to receive(:build)
       perform
     end
 
     it 'sends its splatted args to #perform on the service' do
-      expect(ExampleControllerClass::ExampleService).to receive(:new).with(*args)
+      expect(ExampleControllerClass::ExampleService).to receive(:build).with(*args)
       perform
     end
 
     describe 'with a valid mapping' do
-      it 'calls #perform on the service and store the result' do
+      it 'calls #perform on the service' do
         expect(controller_service).to receive(:perform)
         perform
-        expect(conductor.result).to eq result
+      end
+
+      it 'returns the service result' do
+        expect(perform).to eq result
       end
 
       it 'calls Aldous::ResultDispatcher.execute with controller, result, mapping' do
@@ -124,7 +87,7 @@ RSpec.describe Aldous::Conductor do
     describe 'with preconditions' do
 
       let(:preconditions) do
-        [precondition_class.new]
+        [ExampleControllerClass::ExamplePrecondition.new]
       end
 
       context 'when precondition failures are all mapped' do
@@ -141,7 +104,7 @@ RSpec.describe Aldous::Conductor do
       end
 
       context 'when precondition failures are absent from mapping' do
-        let(:mapping) {{}}
+        let(:mapping) { {} }
 
         it 'raises MissingPreconditionFailureMappingError' do
           expect { perform }.to raise_error Aldous::Conductor::MissingPreconditionFailureMappingError

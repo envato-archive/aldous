@@ -1,4 +1,4 @@
-RSpec.describe Aldous::ControllerService::CheckPreconditions do
+RSpec.describe Aldous::ControllerService::CheckPreconditionsService do
   class BadPrecondition
   end
 
