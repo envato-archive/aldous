@@ -10,24 +10,9 @@ RSpec.describe Aldous::ControllerService::Wrapper do
 
   describe '#perform' do
     subject(:perform) { wrapper.perform }
-    let(:check_strong_params_result) { Aldous::Result::Success.new }
     let(:check_preconditions_result) { Aldous::Result::Success.new }
     before do
-      allow(Aldous::ControllerService::CheckStrongParamsService).to receive(:perform) { check_strong_params_result }
       allow(Aldous::ControllerService::CheckPreconditionsService).to receive(:perform) { check_preconditions_result }
-    end
-
-    it 'checks strong parameters for controller service' do
-      expect(Aldous::ControllerService::CheckStrongParamsService).to receive(:perform).with(controller_service)
-      perform
-    end
-
-    context 'when strong params check fails' do
-      let(:check_strong_params_result) { Aldous::Result::Failure.new }
-
-      it 'returns result of strong params check' do
-        expect(perform).to be check_strong_params_result
-      end
     end
 
     it 'checks controller service preconditions' do

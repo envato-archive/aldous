@@ -24,10 +24,6 @@ module Aldous
       {}
     end
 
-    def strong_params
-      {}
-    end
-
     def preconditions
       []
     end

@@ -72,15 +72,6 @@ describe Aldous::ControllerService do
     end
   end
 
-  describe '#strong_params' do
-    let(:controller_service) { ExampleControllerService.new }
-    subject(:strong_params) { controller_service.strong_params }
-
-    it 'defaults to {}' do
-      expect(strong_params).to eq({})
-    end
-  end
-
   describe '#preconditions' do
     let(:controller_service) { ExampleControllerService.new }
     subject(:preconditions) { controller_service.preconditions }
