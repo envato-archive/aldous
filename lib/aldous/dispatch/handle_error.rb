@@ -35,7 +35,7 @@ module Aldous
       end
 
       def result
-        @result ||= ::Aldous::Result::ServerError.new(error: error)
+        @result ||= ::Aldous::Result::ServerError.new(errors: [error])
       end
     end
   end
