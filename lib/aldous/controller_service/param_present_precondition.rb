@@ -22,7 +22,7 @@ module Aldous
         end
         Aldous::Result::Success.new
       rescue
-        Aldous::Result::Failure.new(error: "Missing #{required_param_key} param")
+        Aldous::Result::Failure.new(errors: ["Missing #{required_param_key} param"])
       end
     end
   end
