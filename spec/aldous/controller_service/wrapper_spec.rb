@@ -23,8 +23,9 @@ RSpec.describe Aldous::ControllerService::Wrapper do
     context 'when preconditions check fails' do
       let(:check_preconditions_result) { Aldous::Result::Failure.new }
 
-      it 'returns result of preconditions check' do
-        expect(perform).to be check_preconditions_result
+      it 'returns result of preconditions check, including default result options' do
+        expect(perform.class).to eq check_preconditions_result.class
+        expect(perform.default_result_option).to eq true
       end
     end
 

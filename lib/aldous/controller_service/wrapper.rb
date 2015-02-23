@@ -10,7 +10,9 @@ module Aldous
       end
 
       def perform
-        return check_preconditions_result unless check_preconditions_result.success?
+        unless check_preconditions_result.success?
+          return build_result_with_default_options(check_preconditions_result)
+        end
 
         build_result_with_default_options(controller_service.perform)
       rescue => e
