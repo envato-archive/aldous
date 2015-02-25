@@ -1,19 +1,24 @@
 require 'aldous/controller_service/wrapper'
 
 module Aldous
-  module ControllerService
-    def self.included(base)
-      base.extend ClassMethods
+  class ControllerService
+    extend Forwardable
+
+    class << self
+      def build(controller)
+        Aldous::ControllerService::Wrapper.new(new(controller))
+      end
+
+      def perform(controller)
+        build(controller).perform
+      end
     end
 
-    module ClassMethods
-      def build(*args)
-        Aldous::ControllerService::Wrapper.new(new(*args))
-      end
+    attr_reader :controller
 
-      def perform(*args)
-        build(*args).perform
-      end
+
+    def initialize(controller)
+      @controller = controller
     end
 
     def perform
@@ -26,6 +31,10 @@ module Aldous
 
     def preconditions
       []
+    end
+
+    Aldous.configuration.controller_methods_exposed_to_controller_service.each do |method_name|
+      def_delegators :controller, method_name
     end
   end
 end

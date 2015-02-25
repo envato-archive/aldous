@@ -5,15 +5,22 @@ module Aldous
     class MissingPreconditionFailureMappingError < StandardError;
     end
 
-    attr_reader :controller, :mapping
+    class << self
+      def perform(controller, controller_service_class, mapping)
+        self.new(controller, controller_service_class, mapping).perform
+      end
+    end
 
-    def initialize(controller, mapping)
+    attr_reader :controller, :controller_service_class, :mapping
+
+    def initialize(controller, controller_service_class, mapping)
       @controller = controller
+      @controller_service_class = controller_service_class
       @mapping    = mapping
     end
 
-    def perform(*args)
-      service = controller_service_class.build(*args)
+    def perform
+      service = controller_service_class.build(controller)
       validate_mapping!(service)
       service.perform.tap do |result|
         Aldous::ResultDispatcher.execute(controller, result, mapping)
@@ -21,11 +28,6 @@ module Aldous
     end
 
     private
-
-    def controller_service_class
-      service_name = "#{controller.params[:action].classify}Service"
-      controller.class.const_get(service_name)
-    end
 
     def validate_mapping!(service)
       ensure_all_members_are_classes
