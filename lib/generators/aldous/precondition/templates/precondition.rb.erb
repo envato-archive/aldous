@@ -1,0 +1,20 @@
+class <%= controller_class_name %> < <%= base_controller_class_name %>
+  class <%= precondition_name %>
+    include Aldous
+    include Aldous::ControllerService::Precondition
+
+    attr_reader :some_object
+
+    def initialize(some_object)
+      @some_object = some_object
+    end
+
+    def check
+      if some_object.present?
+        Result::Success.new
+      else
+        Result::NotFound.new
+      end
+    end
+  end
+end

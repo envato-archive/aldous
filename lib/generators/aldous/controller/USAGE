@@ -1,0 +1,8 @@
+Description:
+    Generates an Aldous style controller.
+
+Example:
+    rails generate aldous:controller Foo::ThingsController
+
+    This will create:
+        app/controllers/foo/things_controller.rb

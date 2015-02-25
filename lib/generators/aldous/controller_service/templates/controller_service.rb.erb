@@ -1,0 +1,28 @@
+class <%= controller_class_name %> < <%= base_controller_class_name %>
+  class <%= service_name %>
+    include Aldous::ControllerService
+    include Aldous::ControllerService::ParamsConstructor
+    include Aldous::Result
+
+    #attr :params
+
+    # Uncomment this if you want to override the constructor
+    #def initialize(params:)
+    #  @params = params
+    #end
+
+    # Uncomment this if you want to add preconditions
+    #def preconditions
+    #  []
+    #end
+
+    def default_result_options
+      {}
+    end
+
+    def perform
+      Success.new
+    end
+  end
+end
+

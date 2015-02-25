@@ -1,0 +1,48 @@
+class <%= fully_qualified_controller_name %> < <%= fully_qualified_base_controller_name %>
+  include Aldous::Result
+
+  #def index
+  #  Aldous::Conductor.new(self, {
+  #    Success => <%= class_name_without_controller %>::IndexView,
+  #  }).perform(params: params)
+  #end
+
+  #def show
+  #  Aldous::Conductor.new(self, {
+  #    Success => <%= class_name_without_controller %>::ShowView,
+  #  }).perform(params: params)
+  #end
+
+  #def new
+  #  Aldous::Conductor.new(self, {
+  #    Success => <%= class_name_without_controller %>::NewView,
+  #  }).perform(params: params)
+  #end
+
+  #def create
+  #  Aldous::Conductor.new(self, {
+  #    Success => <%= class_name_without_controller %>::ShowView,
+  #    Failure => <%= class_name_without_controller %>::NewView,
+  #  }).perform(params: params)
+  #end
+
+  #def edit
+  #  Aldous::Conductor.new(self, {
+  #    Success => <%= class_name_without_controller %>::EditView,
+  #  }).perform(params: params)
+  #end
+
+  #def update
+  #  Aldous::Conductor.new(self, {
+  #    Success => <%= class_name_without_controller %>::ShowView,
+  #    Failure => <%= class_name_without_controller %>::NewView,
+  #  }).perform(params: params)
+  #end
+
+  #def destroy
+  #  Aldous::Conductor.new(self, {
+  #    Success => <%= class_name_without_controller %>::IndexView,
+  #    Failure => <%= class_name_without_controller %>::ShowView,
+  #  }).perform(params: params)
+  #end
+end

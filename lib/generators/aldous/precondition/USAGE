@@ -1,0 +1,9 @@
+Description:
+    Generates an Aldous controller service
+
+Example:
+    rails generate aldous:precondition BundlesController::HelloPresentPrecondition
+    rails generate aldous:precondition bundles_controller/hello_present_precondition
+
+    This will create:
+        app/controller_services/bundles_controller/hello_present_precondition.rb
