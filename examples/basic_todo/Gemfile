@@ -1,0 +1,54 @@
+source 'https://rubygems.org'
+
+ruby '2.2.0'
+
+gem 'aldous', path: '../../'
+
+gem 'rails', '4.2.0'
+gem 'sqlite3'
+gem 'bcrypt', '~> 3.1.7'
+
+gem 'slim-rails'
+gem 'sass-rails', '~> 5.0'
+gem 'coffee-rails', '~> 4.1.0'
+gem 'uglifier', '>= 1.3.0'
+gem 'autoprefixer-rails'
+gem 'kaminari'
+#gem 'handlebars_assets'
+
+gem 'configatron'
+gem 'yajl-ruby', require: 'yajl/json_gem'
+
+gem 'dalli'
+
+gem 'jquery-rails'
+gem 'turbolinks'
+gem 'jbuilder', '~> 2.0'
+
+
+group :development, :test do
+  gem 'pry-rails'
+  gem 'pry-byebug'
+  gem 'spring'
+  gem 'spring-commands-rspec'
+  gem 'rspec-rails'
+  gem 'annotate'
+end
+
+group :test do
+  gem 'capybara'
+  gem 'poltergeist'
+  gem 'timecop'
+  gem 'database_cleaner'
+  gem 'webmock'
+end
+
+group :development do
+  gem 'foreman'
+  gem 'quiet_assets'
+  gem 'thin'
+end
+
+group :development, :staging do
+  gem 'faker'
+end
