@@ -4,6 +4,7 @@ require 'aldous/dispatch/determine_response_type'
 require 'aldous/dispatch/determine_response_status'
 
 require 'aldous/respondable/base'
+require 'aldous/logging_wrapper'
 
 module Aldous
   class ResultDispatcher
@@ -44,7 +45,7 @@ module Aldous
 
     def report_if_response_type_class_not_found(response_type_class)
       unless response_type_class
-        ::Aldous.config.error_reporter.report("Unable to find response type class for #{result.class.name}, will try to use default")
+        ::Aldous::LoggingWrapper.log("Unable to find response type class for #{result.class.name}, will try to use default")
       end
     end
 

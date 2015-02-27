@@ -1,0 +1,14 @@
+- provide :title, "New Todo"
+
+= render header_template
+
+h1 New Todo
+
+div
+  = form_for todo, url: todos_path(todo) do |f|
+    = f.label :description
+    = f.text_field :description
+    = f.hidden_field :user_id
+    = f.submit 'Create'
+
+

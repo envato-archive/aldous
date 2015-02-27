@@ -1,0 +1,13 @@
+.header
+  .header__container
+    = link_to 'Home', root_path, class: 'header__home-link'
+    .header__authentication
+      - if current_user
+        span.header__authenticated-user
+          = current_user.email
+          '  |
+        = button_to 'Sign Out', sign_in_path(current_user), method: :delete, class: 'header__sign-out-link'
+      - else
+        = link_to 'Sign In', new_sign_in_path, class: 'header__sign-in-link'
+        '  |
+        = link_to 'Sign Up', new_sign_up_path, class: 'header__sign-up-link'

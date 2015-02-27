@@ -1,12 +1,21 @@
 require 'aldous/controller_service/check_preconditions_service'
+require 'aldous/logging_wrapper'
 
 module Aldous
-  module ControllerService
+  class ControllerService
     class Wrapper
       attr :controller_service
 
       def initialize(controller_service)
         @controller_service = controller_service
+      end
+
+      def preconditions
+        controller_service.preconditions
+      end
+
+      def default_result_options
+        controller_service.default_result_options
       end
 
       def perform
@@ -16,7 +25,7 @@ module Aldous
 
         build_result_with_default_options(controller_service.perform)
       rescue => e
-        ::Aldous.config.error_reporter.report(e)
+        ::Aldous::LoggingWrapper.log(e)
         return ::Aldous::Result::ServerError.new(
           default_result_options.merge(errors: [e])
         )
@@ -30,14 +39,6 @@ module Aldous
 
       def check_preconditions_result
         @check_preconditions_result ||= CheckPreconditionsService.perform(preconditions)
-      end
-
-      def default_result_options
-        controller_service.default_result_options
-      end
-
-      def preconditions
-        controller_service.preconditions
       end
     end
   end

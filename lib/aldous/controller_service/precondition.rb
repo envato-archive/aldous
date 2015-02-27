@@ -1,8 +1,10 @@
 require 'aldous/result/precondition_failure'
+require 'aldous/result'
 
 module Aldous
-  module ControllerService
+  class ControllerService
     module Precondition
+      include Aldous
       # when the module is included we create a Failure inner class
       # e.g. if the precondition is called BlahPresentPrecondition we will
       # get a new result class called BlahPresentPrecondition::Failure

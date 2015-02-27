@@ -1,6 +1,7 @@
 require 'aldous/dispatch/request/find_default_response_types'
 require 'aldous/dispatch/determine_response_status'
 require 'aldous/result/server_error'
+require 'aldous/logging_wrapper'
 
 module Aldous
   module Dispatch
@@ -13,7 +14,7 @@ module Aldous
       end
 
       def perform
-        ::Aldous.config.error_reporter.report(error)
+        ::Aldous::LoggingWrapper.log(error)
         response_type_class.new(result, controller.view_context).action(controller).execute(response_status)
       rescue
         # final fallback so we can blow up gracefully

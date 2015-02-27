@@ -1,5 +1,6 @@
 require 'aldous/result/base'
 require 'aldous/result/failure'
+require 'aldous/logging_wrapper'
 
 module Aldous
   module Service
@@ -25,7 +26,7 @@ module Aldous
       def perform
         perform!
       rescue => e
-        ::Aldous.config.error_reporter.report(e.cause || e)
+        ::Aldous::LoggingWrapper.log(e.cause || e)
         ::Aldous::Result::Failure.new(service.default_result_options.merge(errors: [e]))
       end
 

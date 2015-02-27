@@ -9,7 +9,7 @@ module Aldous
       end
 
       def build_result(data_hash)
-        result.class.new(data_hash)
+        result.class.new(result._options.merge(data_hash))
       end
     end
   end

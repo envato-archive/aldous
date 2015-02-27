@@ -1,5 +1,5 @@
 module Aldous
-  module ControllerService
+  class ControllerService
     module ParamsConstructor
       attr_reader :params
 

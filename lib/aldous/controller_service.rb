@@ -1,8 +1,9 @@
+require 'forwardable'
 require 'aldous/controller_service/wrapper'
 
 module Aldous
   class ControllerService
-    extend Forwardable
+    include Aldous
 
     class << self
       def build(controller)
@@ -12,10 +13,20 @@ module Aldous
       def perform(controller)
         build(controller).perform
       end
+
+      def inherited(klass)
+        # expose methods from controller to the service, according to configuration
+        ::Aldous.configuration.controller_methods_exposed_to_controller_service.each do |method_name|
+          unless klass.method_defined?(method_name)
+            define_method method_name do
+              controller.send(method_name)
+            end
+          end
+        end
+      end
     end
 
     attr_reader :controller
-
 
     def initialize(controller)
       @controller = controller
@@ -31,10 +42,6 @@ module Aldous
 
     def preconditions
       []
-    end
-
-    Aldous.configuration.controller_methods_exposed_to_controller_service.each do |method_name|
-      def_delegators :controller, method_name
     end
   end
 end

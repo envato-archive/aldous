@@ -1,5 +1,4 @@
 require 'aldous/version'
-
 require 'aldous/configuration'
 
 require 'aldous/conductor'
@@ -18,18 +17,20 @@ require 'aldous/result_dispatcher'
 require 'aldous/result/failure'
 require 'aldous/result/not_found'
 require 'aldous/result/precondition_failure'
-require 'aldous/result/strong_params_failure'
 require 'aldous/result/server_error'
 require 'aldous/result/success'
 require 'aldous/result/unauthenticated'
 require 'aldous/result/unauthorized'
+
+require 'aldous/controller'
 
 require 'aldous/service'
 
 require 'aldous/controller_service'
 require 'aldous/controller_service/params_constructor'
 require 'aldous/controller_service/precondition'
-require 'aldous/controller_service/param_present_precondition'
+
+require 'aldous/param_present_precondition'
 
 require 'aldous/view/blank/atom_view'
 require 'aldous/view/blank/json_view'
@@ -48,3 +49,4 @@ module Aldous
     alias :config :configuration # can use either config or configuration
   end
 end
+

@@ -21,10 +21,7 @@ gem 'yajl-ruby', require: 'yajl/json_gem'
 
 gem 'dalli'
 
-gem 'jquery-rails'
-gem 'turbolinks'
-gem 'jbuilder', '~> 2.0'
-
+gem 'awesome_print'
 
 group :development, :test do
   gem 'pry-rails'

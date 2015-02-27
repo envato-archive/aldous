@@ -23,6 +23,9 @@ module Aldous
       service = controller_service_class.build(controller)
       validate_mapping!(service)
       service.perform.tap do |result|
+        p "*****************"
+        p mapping
+        p result
         Aldous::ResultDispatcher.execute(controller, result, mapping)
       end
     end

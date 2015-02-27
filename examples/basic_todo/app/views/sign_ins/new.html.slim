@@ -1,0 +1,14 @@
+- provide :title, "Sign In"
+
+= render header_template
+
+h1 Sign In
+
+div
+  = form_for user, url: sign_ins_path(user) do |f|
+    = f.label :email
+    = f.text_field :email
+    = f.label :password
+    = f.text_field :password
+    = f.submit 'Sign In'
+

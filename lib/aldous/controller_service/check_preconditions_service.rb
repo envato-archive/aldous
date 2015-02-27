@@ -1,9 +1,10 @@
 require 'aldous/result/precondition_failure'
 require 'aldous/result/success'
 require 'aldous/controller_service/precondition'
+require 'aldous/service'
 
 module Aldous
-  module ControllerService
+  class ControllerService
     class CheckPreconditionsService
       include Aldous::Service
 
