@@ -15,7 +15,7 @@ class Todos::IndexView::TodoView  < Aldous::Respondable::Renderable
   private
 
   def todo
-    result.todo
+    view_data.todo
   end
 
   def done

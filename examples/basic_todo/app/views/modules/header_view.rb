@@ -12,7 +12,7 @@ module Modules
     private
 
     def current_user
-      result.current_user
+      view_data.current_user
     end
   end
 end

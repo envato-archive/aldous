@@ -4,7 +4,7 @@ class Todos::EditView < Aldous::Respondable::Renderable
       template: 'todos/edit',
       locals: {
         header_template: header_template,
-        todo: result.todo
+        todo: view_data.todo
       }
     }
   end
@@ -12,6 +12,6 @@ class Todos::EditView < Aldous::Respondable::Renderable
   private
 
   def header_template
-    Modules::HeaderView.new(result, view_context).template
+    build_view(Modules::HeaderView).template
   end
 end

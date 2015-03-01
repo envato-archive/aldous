@@ -12,11 +12,11 @@ class Todos::IndexView < Aldous::Respondable::Renderable
   private
 
   def todos
-    result.todos
+    view_data.todos
   end
 
   def header_template
-    Modules::HeaderView.new(result, view_context).template
+    build_view(Modules::HeaderView).template
   end
 
   def todo_templates
@@ -26,6 +26,6 @@ class Todos::IndexView < Aldous::Respondable::Renderable
   end
 
   def todo_template(todo)
-    Todos::IndexView::TodoView.new(build_result(todo: todo), view_context).template
+    build_view(Todos::IndexView::TodoView, todo: todo).template
   end
 end

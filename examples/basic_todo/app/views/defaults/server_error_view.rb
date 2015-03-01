@@ -2,11 +2,15 @@ module Defaults
   class ServerErrorView < Aldous::Respondable::Renderable
     def template
       {
-        partial: 'defaults/server_error',
+        template: 'defaults/server_error',
         locals: {
-          errors: result.errors,
+          errors: view_data.errors,
         }
       }
+    end
+
+    def default_status
+      :internal_server_error
     end
   end
 end

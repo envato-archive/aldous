@@ -6,7 +6,7 @@ class UsersController::IndexService < BaseControllerService
   end
 
   def perform
-    Success.new(users: User.all)
+    Result::Success.new(users: User.all)
   end
 end
 

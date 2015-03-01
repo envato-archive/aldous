@@ -22,6 +22,7 @@ gem 'yajl-ruby', require: 'yajl/json_gem'
 gem 'dalli'
 
 gem 'awesome_print'
+gem 'cancancan', '~> 1.10'
 
 group :development, :test do
   gem 'pry-rails'

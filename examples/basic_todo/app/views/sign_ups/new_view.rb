@@ -13,7 +13,7 @@ module SignUps
     private
 
     def header_template
-      Modules::HeaderView.new(result, view_context).template
+      build_view(Modules::HeaderView).template
     end
   end
 end

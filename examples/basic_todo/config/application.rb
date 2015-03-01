@@ -26,7 +26,7 @@ module BasicTodo
       #{config.root}/app/views
       #{config.root}/app/services
       #{config.root}/app/controller_services
-      #{config.root}/app/controller_filters
+      #{config.root}/app/controller_actions
       #{config.root}/lib
     )
 
@@ -34,7 +34,7 @@ module BasicTodo
       #{config.root}/app/views
       #{config.root}/app/services
       #{config.root}/app/controller_services
-      #{config.root}/app/controller_filters
+      #{config.root}/app/controller_actions
       #{config.root}/lib
     )
   end

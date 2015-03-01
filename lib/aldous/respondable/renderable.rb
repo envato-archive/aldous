@@ -5,7 +5,11 @@ module Aldous
   module Respondable
     class Renderable < Base
       def action(controller)
-        RenderAction.new(template, controller, result)
+        RenderAction.new(template, status, controller, view_data)
+      end
+
+      def default_status
+        :ok
       end
 
       def template
@@ -26,23 +30,18 @@ module Aldous
       private
 
       class RenderAction
-        attr_reader :template, :controller, :result
+        attr_reader :template, :controller, :view_data, :status
 
-        def initialize(template, controller, result)
+        def initialize(template, status, controller, view_data)
+          @status = status
           @template = template
           @controller = controller
-          @result = result
+          @view_data = view_data
         end
 
-        def execute(response_status = nil)
-          Shared::Flash.new(result, controller.flash.now).set_error
-          controller.render template.merge(response_options(response_status))
-        end
-
-        private
-
-        def response_options(response_status)
-          response_status ? {status: (response_status || :ok)} : {}
+        def execute
+          Shared::Flash.new(view_data, controller.flash.now).set_error
+          controller.render template.merge(status: status)
         end
       end
     end

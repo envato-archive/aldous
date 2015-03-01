@@ -1,9 +1,8 @@
-require 'aldous/result/base'
-require 'aldous/result/failure'
 require 'aldous/logging_wrapper'
+require 'aldous/service/result/failure'
 
 module Aldous
-  module Service
+  class Service
     class Wrapper
       attr :service
 
@@ -11,12 +10,16 @@ module Aldous
         @service = service
       end
 
+      def raisable_error
+        service.raisable_error
+      end
+
+      def default_result_data
+        service.default_result_data
+      end
+
       def perform!
         result = service.perform
-
-        unless result.kind_of?(::Aldous::Result::Base)
-          raise "Return value of #perform must be a type of #{::Aldous::Result}"
-        end
 
         build_result_with_default_options(result)
       rescue => e
@@ -26,18 +29,14 @@ module Aldous
       def perform
         perform!
       rescue => e
-        ::Aldous::LoggingWrapper.log(e.cause || e)
-        ::Aldous::Result::Failure.new(service.default_result_options.merge(errors: [e]))
+        Aldous::LoggingWrapper.log(e.cause || e)
+        Aldous::Service::Result::Failure.new(default_result_data.merge(errors: [e]))
       end
 
       private
 
       def build_result_with_default_options(result)
-        result.class.new(service.default_result_options.merge(result._options))
-      end
-
-      def raisable_error
-        service.raisable_error
+        result.class.new(default_result_data.merge(result._data))
       end
     end
   end

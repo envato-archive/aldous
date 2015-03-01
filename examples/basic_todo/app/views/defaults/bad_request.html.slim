@@ -1,0 +1,12 @@
+- provide :title, "Bad Request"
+
+div style="padding: 40px"
+  h1= yield(:title)
+
+  p Boo bad request
+
+  - if Rails.env.development?
+    == ap errors
+    - errors.each do |error|
+      - if error.respond_to?(:backtrace)
+        == ap error.backtrace
