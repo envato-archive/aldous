@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     scope "todos/:todo_id" do
       resource :completed, only: [:create], as: :completed_todos, controller: 'todos/completed'
     end
+
+    resources :users, only: [:index]
   end
 
   root to: 'home#show'

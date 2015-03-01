@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
   include Aldous::Controller
 
-  controller_action :index
+  controller_actions :index
 end

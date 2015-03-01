@@ -21,10 +21,11 @@ module Aldous
       def perform
         action = controller_action_class.build(controller)
 
-        precondition_result = PreconditionsExecutionService.new(action).perform
+        precondition, precondition_result = PreconditionsExecutionService.new(action, controller).perform
 
         action_result = nil
         if precondition_result
+          action = precondition
           action_result = precondition_result
         else
           action_result = action.perform

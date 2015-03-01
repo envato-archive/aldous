@@ -17,6 +17,7 @@ require 'aldous/service'
 
 require 'aldous/controller'
 require 'aldous/controller_action'
+require 'aldous/controller/action/precondition'
 require 'aldous/params'
 
 require 'aldous/view/blank/atom_view'

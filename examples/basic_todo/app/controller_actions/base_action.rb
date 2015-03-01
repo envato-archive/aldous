@@ -7,14 +7,12 @@ class BaseAction < ::Aldous::ControllerAction
   end
 
   def preconditions
-    []
+    [Shared::EnsureUserNotDisabledPrecondition]
   end
 
   def default_error_respondable
     Defaults::ServerErrorView
   end
-
-  private
 
   def current_user
     @current_user ||= FindCurrentUserService.perform(session).user
@@ -24,4 +22,3 @@ class BaseAction < ::Aldous::ControllerAction
     @current_ability ||= Ability.new(current_user)
   end
 end
-

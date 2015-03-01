@@ -1,4 +1,4 @@
-require 'aldous/controller_action/wrapper'
+require 'aldous/controller/action/wrapper'
 require 'aldous/view/blank/html_view'
 
 module Aldous
@@ -7,7 +7,7 @@ module Aldous
 
     class << self
       def build(controller)
-        Aldous::ControllerAction::Wrapper.new(new(controller))
+        Aldous::Controller::Action::Wrapper.new(new(controller))
       end
 
       def perform(controller)

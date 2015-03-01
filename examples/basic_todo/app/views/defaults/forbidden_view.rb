@@ -4,6 +4,7 @@ module Defaults
       {
         template: 'defaults/forbidden',
         locals: {
+          error: view_data.errors.first || "You're not authorized to do this"
         }
       }
     end

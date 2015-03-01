@@ -17,7 +17,8 @@ class Ability
 
   def account_holder
     can :manage, Todo, user_id: user.id
-    can :manage, User, id: user.id
+    can :create, User
+    can [:read, :update], user
   end
 
   def admin
