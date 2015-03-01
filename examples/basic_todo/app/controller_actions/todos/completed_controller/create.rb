@@ -6,6 +6,7 @@ class Todos::CompletedController::Create < BaseAction
   def perform
     return Home::ShowRedirect.build unless current_user
     return Todos::NotFoundView.build(todo_id: todo_id) unless todo
+    return Defaults::ForbiddenView.build unless current_ability.can?(:update, todo)
 
     todo.done = true
 

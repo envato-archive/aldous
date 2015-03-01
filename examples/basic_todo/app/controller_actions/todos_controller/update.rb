@@ -7,6 +7,7 @@ class TodosController::Update < BaseAction
     return Home::ShowRedirect.build unless current_user
     return Defaults::BadRequestView.build(errors: [todo_params.error_message]) unless todo_params.fetch
     return Todos::NotFoundView.build(todo_id: params[:id]) unless todo
+    return Defaults::ForbiddenView.build unless current_ability.can?(:update, todo)
 
     if todo.update_attributes(todo_params.fetch)
       Todos::IndexRedirect.build
