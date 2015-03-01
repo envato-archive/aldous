@@ -16,7 +16,7 @@ module Aldous
 
       def inherited(klass)
         # expose methods from controller to the service, according to configuration
-        ::Aldous.configuration.controller_methods_exposed_to_controller_service.each do |method_name|
+        ::Aldous.configuration.controller_methods_exposed_to_action.each do |method_name|
           unless klass.method_defined?(method_name)
             define_method method_name do
               controller.send(method_name)

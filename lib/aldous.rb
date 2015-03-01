@@ -13,12 +13,11 @@ require 'aldous/respondable/request_http_basic_authentication'
 require 'aldous/service/result/failure'
 require 'aldous/service/result/success'
 
-require 'aldous/controller'
-
 require 'aldous/service'
-require 'aldous/params'
 
+require 'aldous/controller'
 require 'aldous/controller_action'
+require 'aldous/params'
 
 require 'aldous/view/blank/atom_view'
 require 'aldous/view/blank/json_view'

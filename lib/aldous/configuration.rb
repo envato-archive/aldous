@@ -6,7 +6,7 @@ module Aldous
   class Configuration
     attr_accessor :error_reporter, :default_json_response_types,
       :default_html_response_types, :default_atom_response_types,
-      :controller_methods_exposed_to_controller_service,
+      :controller_methods_exposed_to_action,
       :logger
 
     def initialize
@@ -16,7 +16,7 @@ module Aldous
       @default_html_response_types = {}
       @default_atom_response_types = {}
 
-      @controller_methods_exposed_to_controller_service = [:params, :session, :cookies, :request, :response]
+      @controller_methods_exposed_to_action = [:params, :session, :cookies, :request, :response]
     end
   end
 end
