@@ -36,7 +36,7 @@ module Aldous
 
         def execute(response_status = nil)
           Shared::Flash.new(result, controller.flash.now).set_error
-          controller.render template.merge(response_options(response_status))
+          controller.render template.merge(response_options(template[:status] || response_status))
         end
 
         private
