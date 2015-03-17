@@ -26,29 +26,8 @@ module Aldous
           controller_action.perform
         rescue => e
           ::Aldous::LoggingWrapper.log(e)
-          default_error_respondable.build(errors: [e])
+          controller_action.build_view(default_error_respondable, errors: [e])
         end
-
-        #def method_missing(method_sym, *arguments, &block)
-          #if controller_action.respond_to?(method_sym)
-            #self.singleton_class.class_exec(method_sym, controller_action) do |method_name, controller_action|
-              #define_method method_name do
-                #controller_action.send(method_name)
-              #end
-            #end
-            #send(method_sym)
-          #else
-            #super
-          #end
-        #end
-
-        #def respond_to?(method_sym, include_private = true)
-          #if controller_action.respond_to?(method_sym)
-            #true
-          #else
-            #super
-          #end
-        #end
       end
     end
   end

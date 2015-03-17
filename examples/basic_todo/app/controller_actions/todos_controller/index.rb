@@ -4,9 +4,9 @@ class TodosController::Index < BaseAction
   end
 
   def perform
-    return Home::ShowRedirect.build unless current_user
+    return build_view(Home::ShowRedirect) unless current_user
 
-    Todos::IndexView.build
+    build_view(Todos::IndexView)
   end
 
   private

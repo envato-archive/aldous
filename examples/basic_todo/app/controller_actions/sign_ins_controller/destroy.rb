@@ -1,9 +1,9 @@
 class SignInsController::Destroy < BaseAction
   def perform
-    return Home::ShowRedirect.build unless current_user
+    return build_view(Home::ShowRedirect) unless current_user
 
     SignOutService.perform!(session)
 
-    Home::ShowRedirect.build
+    build_view(Home::ShowRedirect)
   end
 end

@@ -1,5 +1,7 @@
 require 'aldous/controller/action/wrapper'
 require 'aldous/view/blank/html_view'
+require 'aldous/simple_dto'
+require 'aldous/build_respondable_service'
 
 module Aldous
   class ControllerAction
@@ -46,6 +48,16 @@ module Aldous
 
     def default_error_respondable
       ::Aldous::View::Blank::HtmlView
+    end
+
+    def build_view(respondable_class, status = nil, extra_data = {})
+      ::Aldous::BuildRespondableService.new(
+        view_context: controller.view_context,
+        default_view_data: default_view_data,
+        respondable_class: respondable_class,
+        status: status,
+        extra_data: extra_data
+      ).perform
     end
   end
 end

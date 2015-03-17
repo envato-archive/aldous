@@ -23,7 +23,7 @@ module Aldous
             precondition.perform
           rescue => e
             ::Aldous::LoggingWrapper.log(e)
-            default_error_respondable.build(errors: [e])
+            precondition.build_view(default_error_respondable, errors: [e])
           end
         end
       end

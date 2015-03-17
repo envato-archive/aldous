@@ -4,9 +4,9 @@ class UsersController::Index < BaseAction
   end
 
   def perform
-    return Defaults::ForbiddenView.build unless current_ability.can?(:index, User)
+    return build_view(Defaults::ForbiddenView) unless current_ability.can?(:index, User)
 
-    Users::IndexView.build
+    build_view(Users::IndexView)
   end
 
   private

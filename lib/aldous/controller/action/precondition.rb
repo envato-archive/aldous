@@ -1,4 +1,5 @@
 require 'aldous/controller/action/precondition/wrapper'
+require 'aldous/build_respondable_service'
 
 module Aldous
   module Controller
@@ -36,26 +37,15 @@ module Aldous
           raise NotImplementedError.new("#{self.class.name} must implement method #perform")
         end
 
-        #def method_missing(method_sym, *arguments, &block)
-          #if action.respond_to?(method_sym)
-            #self.singleton_class.class_exec(method_sym, action) do |method_name, action|
-              #define_method method_name do
-                #action.send(method_name)
-              #end
-            #end
-            #send(method_sym)
-          #else
-            #super
-          #end
-        #end
-
-        #def respond_to?(method_sym, include_private = true)
-          #if action.respond_to?(method_sym)
-            #true
-          #else
-            #super
-          #end
-        #end
+        def build_view(respondable_class, status = nil, extra_data = {})
+          ::Aldous::BuildRespondableService.new(
+            view_context: action.controller.view_context,
+            default_view_data: action.default_view_data,
+            respondable_class: respondable_class,
+            status: status,
+            extra_data: extra_data
+          ).perform
+        end
       end
     end
   end
