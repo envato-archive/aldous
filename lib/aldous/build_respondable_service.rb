@@ -14,16 +14,10 @@ module Aldous
     end
 
     def perform
-      actual_status = status
-      actual_extra_data = extra_data
-
-      if status.kind_of?(Hash)
-        actual_status = nil
-        actual_extra_data = status
-      end
-
+      # we don't need the status as a local
+      actual_extra_data = extra_data.reject{|k, v| k == :status}
       view_data = SimpleDto.new(default_view_data.merge(actual_extra_data))
-      respondable_class.new(actual_status, view_data, view_context)
+      respondable_class.new(status, view_data, view_context)
     end
   end
 end

@@ -50,12 +50,12 @@ module Aldous
       ::Aldous::View::Blank::HtmlView
     end
 
-    def build_view(respondable_class, status = nil, extra_data = {})
+    def build_view(respondable_class, extra_data = {})
       ::Aldous::BuildRespondableService.new(
         view_context: controller.view_context,
         default_view_data: default_view_data,
         respondable_class: respondable_class,
-        status: status,
+        status: extra_data[:status],
         extra_data: extra_data
       ).perform
     end
