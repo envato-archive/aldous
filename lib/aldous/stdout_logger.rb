@@ -1,7 +1,9 @@
 module Aldous
   class StdoutLogger
-    def info(message)
-      puts message
+    class << self
+      def info(message)
+        $stdout.puts message
+      end
     end
   end
 end

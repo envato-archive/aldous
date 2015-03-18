@@ -1,7 +1,8 @@
 RSpec.describe Aldous::View::Blank::HtmlView do
-  subject(:view) {described_class.new(result, view_context)}
+  subject(:view) {described_class.new(status, view_data, view_context)}
 
-  let(:result) {double("result")}
+  let(:status) {nil}
+  let(:view_data) {double("result")}
   let(:view_context) {double("view context")}
 
   it "inherits from Renderable" do

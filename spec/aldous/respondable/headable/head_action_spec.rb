@@ -1,13 +1,17 @@
 RSpec.describe Aldous::Respondable::Headable::HeadAction do
-  subject(:respondable) {described_class.new(controller)}
+  subject(:respondable) {described_class.new(controller, status)}
 
-  let(:controller) {double 'controller', head: nil}
-  let(:response_status) {'hello'}
+  let(:controller) {double 'controller'}
+  let(:status) {'hello'}
+
+  before do
+    allow(controller).to receive(:head).with(status)
+  end
 
   describe "#execute" do
     it "calls head on controller with status" do
-      expect(controller).to receive(:head).with(response_status)
-      respondable.execute(response_status)
+      expect(controller).to receive(:head).with(status)
+      respondable.execute
     end
   end
 end

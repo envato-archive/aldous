@@ -1,4 +1,5 @@
 require 'aldous/logging_wrapper'
+require 'aldous/service/result/base'
 require 'aldous/service/result/failure'
 
 module Aldous
@@ -20,6 +21,10 @@ module Aldous
 
       def perform!
         result = service.perform
+
+        unless result.kind_of?(::Aldous::Service::Result::Base)
+          raise "Return value of #perform must be a type of #{::Aldous::Service::Result::Base}"
+        end
 
         build_result_with_default_options(result)
       rescue => e

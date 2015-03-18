@@ -1,6 +1,8 @@
 module Aldous
   class DummyLogger
-    def info(message)
+    class << self
+      def info(message)
+      end
     end
   end
 end
