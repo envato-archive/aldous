@@ -1,7 +1,7 @@
 - provide :title, "Users"
 
-= render header_template
+= render header_view.template
 
 h1 Users
-- user_templates.each do |user_template|
-  = render user_template
+- user_views.each do |user_view|
+  = render user_view

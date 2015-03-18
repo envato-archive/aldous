@@ -1,10 +1,9 @@
-class Users::IndexView < Aldous::Respondable::Renderable
+class Users::IndexView < BaseView
   def template
     {
       template: 'users/index',
       locals: {
-        header_template: header_template,
-        user_templates: user_templates,
+        user_views: user_views,
       }
     }
   end
@@ -15,17 +14,13 @@ class Users::IndexView < Aldous::Respondable::Renderable
     view_data.users
   end
 
-  def header_template
-    build_view(Modules::HeaderView).template
-  end
-
-  def user_templates
+  def user_views
     users.map do |user|
-      user_template(user)
+      user_view(user)
     end
   end
 
-  def user_template(user)
+  def user_view(user)
     build_view(Users::IndexView::UserView, user: user).template
   end
 end

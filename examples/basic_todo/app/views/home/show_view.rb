@@ -1,16 +1,7 @@
-class Home::ShowView < Aldous::Respondable::Renderable
-  def template
+class Home::ShowView < BaseView
+  def template_data
     {
-      template: 'home/show',
-      locals: {
-        header_template: header_template,
-      }
+      template: 'home/show'
     }
-  end
-
-  private
-
-  def header_template
-    build_view(Modules::HeaderView).template
   end
 end

@@ -11,6 +11,10 @@ module Aldous
         @view_context = view_context
       end
 
+      def action(controller)
+        raise Errors::UserError.new("Respondables must define an 'action' method")
+      end
+
       def status
         @status || default_status
       end

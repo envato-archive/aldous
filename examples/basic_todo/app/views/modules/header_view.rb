@@ -1,19 +1,7 @@
-module Modules
-  class HeaderView < Aldous::Respondable::Renderable
-    def template
-      {
-        partial: 'modules/header',
-        locals: {
-          current_user: current_user
-        }
-      }
-    end
-
-    private
-
-    def current_user
-      view_data.current_user
-    end
+class Modules::HeaderView < BaseView
+  def template_data
+    {
+      partial: 'modules/header'
+    }
   end
 end
-

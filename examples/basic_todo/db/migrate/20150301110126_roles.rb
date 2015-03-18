@@ -1,4 +1,7 @@
 class Roles < ActiveRecord::Migration
+  class Role < ActiveRecord::Base
+  end
+
   def change
     create_table :user_roles do |t|
       t.integer :user_id
@@ -12,5 +15,8 @@ class Roles < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    Role.create!(name: 'account_holder')
+    Role.create!(name: 'admin')
   end
 end

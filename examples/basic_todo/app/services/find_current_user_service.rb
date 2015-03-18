@@ -16,8 +16,12 @@ class FindCurrentUserService < Aldous::Service
   def perform
     user_id = session[:user_id]
     if user_id
-      user = User.find(user_id)
-      Result::Success.new(user: user)
+      user = User.where(id: user_id).first
+      if user
+        Result::Success.new(user: user)
+      else
+        Result::Failure.new
+      end
     else
       Result::Failure.new
     end

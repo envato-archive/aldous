@@ -1,5 +1,5 @@
-class Users::IndexView::UserView < Aldous::Respondable::Renderable
-  def template
+class Users::IndexView::UserView < BaseView
+  def template_data
     {
       partial: 'users/index_view/user',
       locals: {

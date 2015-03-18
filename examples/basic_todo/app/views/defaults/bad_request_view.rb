@@ -1,17 +1,15 @@
-module Defaults
-  class BadRequestView < Aldous::Respondable::Renderable
-    def template
-      {
-        template: 'defaults/bad_request',
-        locals: {
-          errors: view_data.errors,
-        }
+class Defaults::BadRequestView < BaseView
+  def template_data
+    {
+      template: 'defaults/bad_request',
+      locals: {
+        errors: view_data.errors,
       }
-    end
+    }
+  end
 
-    def default_status
-      :bad_request
-    end
+  def default_status
+    :bad_request
   end
 end
 

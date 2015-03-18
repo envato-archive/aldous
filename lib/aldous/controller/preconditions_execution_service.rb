@@ -1,4 +1,5 @@
 require 'aldous/respondable/base'
+require 'aldous/controller/action/precondition/wrapper'
 
 module Aldous
   module Controller
@@ -17,7 +18,7 @@ module Aldous
             precondition_result = precondition.perform
 
             if precondition_result.kind_of?(::Aldous::Respondable::Base) ||
-              precondition_result.kind_of?(::Aldous::Respondable::Wrapper)
+              precondition_result.kind_of?(::Aldous::Controller::Action::Precondition::Wrapper)
               return [precondition, precondition_result]
             end
           end

@@ -1,5 +1,5 @@
-class Todos::IndexView::TodoView  < Aldous::Respondable::Renderable
-  def template
+class Todos::IndexView::TodoView < BaseView
+  def template_data
     {
       partial: 'todos/index_view/todo',
       locals: {

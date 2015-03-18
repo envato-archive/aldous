@@ -1,10 +1,9 @@
-class Todos::IndexView < Aldous::Respondable::Renderable
-  def template
+class Todos::IndexView < BaseView
+  def template_data
     {
       template: 'todos/index',
       locals: {
-        header_template: header_template,
-        todo_templates: todo_templates,
+        todo_views: todo_views,
       }
     }
   end
@@ -15,17 +14,13 @@ class Todos::IndexView < Aldous::Respondable::Renderable
     view_data.todos
   end
 
-  def header_template
-    build_view(Modules::HeaderView).template
-  end
-
-  def todo_templates
+  def todo_views
     todos.map do |todo|
-      todo_template(todo)
+      todo_view(todo)
     end
   end
 
-  def todo_template(todo)
-    build_view(Todos::IndexView::TodoView, todo: todo).template
+  def todo_view(todo)
+    build_view(Todos::IndexView::TodoView, todo: todo)
   end
 end

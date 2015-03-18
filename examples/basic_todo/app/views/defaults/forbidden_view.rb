@@ -1,16 +1,14 @@
-module Defaults
-  class ForbiddenView < Aldous::Respondable::Renderable
-    def template
-      {
-        template: 'defaults/forbidden',
-        locals: {
-          error: view_data.errors.first || "You're not authorized to do this"
-        }
+class Defaults::ForbiddenView < BaseView
+  def template_data
+    {
+      template: 'defaults/forbidden',
+      locals: {
+        error: view_data.errors.first || "You're not authorized to do this"
       }
-    end
+    }
+  end
 
-    def default_status
-      :forbidden
-    end
+  def default_status
+    :forbidden
   end
 end
