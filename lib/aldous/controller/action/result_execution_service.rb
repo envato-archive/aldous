@@ -20,8 +20,6 @@ module Aldous
 
         def perform
           respondable.action(controller).execute
-        rescue => e
-          ::Aldous::LoggingWrapper.log(e)
         end
       end
     end

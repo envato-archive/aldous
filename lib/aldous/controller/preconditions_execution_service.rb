@@ -14,16 +14,17 @@ module Aldous
       def perform
         if action.respond_to?(:preconditions) && !action.preconditions.empty?
           action.preconditions.each do |precondition_class|
+            # action here is actually an action wrapper hence the
+            # action.controller_action below
             precondition = precondition_class.build(action.controller_action)
             precondition_result = precondition.perform
 
-            if precondition_result.kind_of?(::Aldous::Respondable::Base) ||
-              precondition_result.kind_of?(::Aldous::Controller::Action::Precondition::Wrapper)
+            if precondition_result.kind_of?(::Aldous::Respondable::Base)
               return [precondition, precondition_result]
             end
           end
-          [nil, nil]
         end
+        [nil, nil]
       end
     end
   end
