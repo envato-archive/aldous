@@ -1,0 +1,6 @@
+- provide :title, "Not Found"
+
+div style="padding: 40px"
+  h1= yield(:title)
+
+  p= "No todo with id #{todo_id}, for user #{user_email}"

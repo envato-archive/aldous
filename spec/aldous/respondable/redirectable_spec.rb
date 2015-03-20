@@ -5,9 +5,10 @@ RSpec.describe Aldous::Respondable::Redirectable do
     end
   end
 
-  subject(:redirectable) {Aldous::Respondable::Redirectable::Dummy.new(result, view_context)}
+  subject(:redirectable) {Aldous::Respondable::Redirectable::Dummy.new(status, view_data, view_context)}
 
-  let(:result) {double("result")}
+  let(:status) {:foo}
+  let(:view_data) {double("view_data")}
   let(:view_context) {double("view context")}
 
   describe "::action" do
@@ -18,7 +19,7 @@ RSpec.describe Aldous::Respondable::Redirectable do
     end
 
     it 'creates a redirect response action with the relevant parameters' do
-      expect(Aldous::Respondable::Redirectable::RedirectAction).to receive(:new).with(redirectable.location, controller, result, :found)
+      expect(Aldous::Respondable::Redirectable::RedirectAction).to receive(:new).with(redirectable.location, controller, view_data, status)
       redirectable.action(controller)
     end
   end

@@ -4,7 +4,7 @@ module Aldous
   module Respondable
     class SendData < Base
       def action(controller)
-        SendDataAction.new(data, options, controller, result)
+        SendDataAction.new(data, options, controller, view_data)
       end
 
       def data
@@ -18,16 +18,16 @@ module Aldous
       private
 
       class SendDataAction
-        attr_reader :controller, :result, :data, :options
+        attr_reader :controller, :view_data, :data, :options
 
-        def initialize(data, options, controller, result)
+        def initialize(data, options, controller, view_data)
           @controller = controller
-          @result = result
+          @view_data = view_data
           @data = data
           @options = options
         end
 
-        def execute(response_status = nil)
+        def execute
           controller.send_data data, options
         end
       end

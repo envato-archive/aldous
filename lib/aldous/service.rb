@@ -2,12 +2,10 @@ require 'aldous/service/wrapper'
 require 'aldous/errors/user_error'
 
 module Aldous
-  module Service
-    def self.included(base)
-      base.extend ClassMethods
-    end
+  class Service
+    include Aldous
 
-    module ClassMethods
+    class << self
       def build(*args)
         Aldous::Service::Wrapper.new(new(*args))
       end
@@ -29,7 +27,7 @@ module Aldous
       Aldous::Errors::UserError
     end
 
-    def default_result_options
+    def default_result_data
       {}
     end
   end

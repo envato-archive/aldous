@@ -1,0 +1,14 @@
+- provide :title, "Edit Todo"
+
+= render header_view.template
+
+h1 Edit Todo
+
+div
+  = form_for todo, url: todo_path(todo) do |f|
+    = f.label :description
+    = f.text_field :description
+    = f.hidden_field :user_id
+    = f.submit 'Update'
+
+

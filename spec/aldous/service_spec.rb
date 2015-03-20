@@ -1,20 +1,19 @@
 describe Aldous::Service do
   before do
-    class ExampleService
-      include Aldous::Service
-
-      def initialize(*args)
-      end
+    class ExampleService < Aldous::Service
     end
   end
+
   after do
     Object.send :remove_const, 'ExampleService'
   end
 
   describe '.build' do
     subject(:build) { ExampleService.build argument }
+
     let(:argument) { 'argument' }
     let(:service) { instance_double ExampleService }
+
     before do
       allow(ExampleService).to receive(:new) { service }
     end
@@ -32,9 +31,10 @@ describe Aldous::Service do
 
   describe '.perform' do
     subject(:perform) { ExampleService.perform argument }
+
     let(:argument) { 'argument' }
-    let(:wrapper) { instance_double Aldous::Service::Wrapper, perform: result }
-    let(:result) { Aldous::Result::Success.new }
+    let(:wrapper) { instance_double Aldous::Service::Wrapper, perform: nil }
+
     before do
       allow(ExampleService).to receive(:build) { wrapper }
     end
@@ -48,17 +48,14 @@ describe Aldous::Service do
       expect(wrapper).to receive(:perform)
       perform
     end
-
-    it 'returns result' do
-      expect(perform).to eq result
-    end
   end
 
   describe '.perform!' do
     subject(:perform!) { ExampleService.perform! argument }
+
     let(:argument) { 'argument' }
-    let(:wrapper) { instance_double Aldous::Service::Wrapper, perform!: result }
-    let(:result) { Aldous::Result::Success.new }
+    let(:wrapper) { instance_double Aldous::Service::Wrapper, perform!: nil }
+
     before do
       allow(ExampleService).to receive(:build) { wrapper }
     end
@@ -71,10 +68,6 @@ describe Aldous::Service do
     it 'calls perform! on the wrapper' do
       expect(wrapper).to receive(:perform!)
       perform!
-    end
-
-    it 'returns result' do
-      expect(perform!).to eq result
     end
   end
 
@@ -96,12 +89,13 @@ describe Aldous::Service do
     end
   end
 
-  describe '#default_result_options' do
+  describe '#default_result_data' do
     let(:service) { ExampleService.new }
-    subject(:default_result_options) { service.default_result_options }
+
+    subject(:default_result_data) { service.default_result_data }
 
     it 'defaults to {}' do
-      expect(default_result_options).to eq({})
+      expect(default_result_data).to eq({})
     end
   end
 end

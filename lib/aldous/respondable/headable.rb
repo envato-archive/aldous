@@ -4,20 +4,25 @@ module Aldous
   module Respondable
     class Headable < Base
       def action(controller)
-        HeadAction.new(controller)
+        HeadAction.new(controller, status)
+      end
+
+      def default_status
+        :ok
       end
 
       private
 
       class HeadAction
-        attr_reader :controller
+        attr_reader :controller, :status
 
-        def initialize(controller)
+        def initialize(controller, status)
           @controller = controller
+          @status = status
         end
 
-        def execute(response_status = nil)
-          controller.head (response_status || :unprocessable_entity)
+        def execute
+          controller.head status
         end
       end
     end

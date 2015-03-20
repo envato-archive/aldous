@@ -5,38 +5,32 @@ module Aldous
   module Respondable
     class Redirectable < Base
       def action(controller)
-        RedirectAction.new(location, controller, result, status)
+        RedirectAction.new(location, controller, view_data, status)
       end
 
       def location
         raise Errors::UserError.new("Redirectable objects must define a 'location' method")
       end
 
-      def status
+      def default_status
         :found
       end
 
       private
 
       class RedirectAction
-        attr_reader :controller, :result, :location, :provided_response_status
+        attr_reader :controller, :view_data, :location, :status
 
-        def initialize(location, controller, result, provided_response_status)
+        def initialize(location, controller, view_data, status)
           @location = location
           @controller = controller
-          @result = result
-          @provided_response_status = provided_response_status
+          @view_data = view_data
+          @status = status
         end
 
-        def execute(ignored_response_status = nil)
-          Shared::Flash.new(result, controller.flash).set_error
-          controller.redirect_to location, response_options(provided_response_status)
-        end
-
-        private
-
-        def response_options(provided_response_status)
-          provided_response_status ? {status: provided_response_status || :found} : {}
+        def execute
+          Shared::Flash.new(view_data, controller.flash).set_error
+          controller.redirect_to location, {status: status}
         end
       end
     end

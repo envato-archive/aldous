@@ -1,0 +1,12 @@
+- provide :title, "View Todos"
+
+= render header_view.template
+
+h1 Your Todos
+
+= link_to 'Create New Todo', new_todo_path
+= button_to 'Delete Completed Todos', all_completed_todos_path, method: :delete
+
+- todo_views.each do |todo_view|
+  = render todo_view.template
+

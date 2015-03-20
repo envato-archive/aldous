@@ -1,0 +1,8 @@
+div
+  span= description
+  '  |
+  span= done
+  span= link_to 'Update', edit_todo_path
+  span= button_to 'Delete', delete_todo_path, method: :delete
+  span= button_to 'Complete', complete_todo_path, method: :post
+hr

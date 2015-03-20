@@ -14,7 +14,7 @@ module Aldous
           @controller = controller
         end
 
-        def execute(response_status = nil)
+        def execute
           controller.request_http_basic_authentication
         end
       end

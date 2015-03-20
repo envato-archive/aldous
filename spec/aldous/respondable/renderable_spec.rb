@@ -1,19 +1,22 @@
 RSpec.describe Aldous::Respondable::Renderable do
   class Aldous::Respondable::Renderable::Dummy < described_class
-    def template
-      'hello'
+    def template_data
+      {
+        locals: {hello: 1}
+      }
+    end
+
+    def default_template_locals
+      {
+        hello: 2
+      }
     end
   end
 
-  class Aldous::Respondable::Renderable::Dummy2 < described_class
-    def template
-      {}
-    end
-  end
+  subject(:renderable) {Aldous::Respondable::Renderable::Dummy.new(status, view_data, view_context)}
 
-  subject(:renderable) {Aldous::Respondable::Renderable::Dummy.new(result, view_context)}
-
-  let(:result) {double("result")}
+  let(:status) {:foo}
+  let(:view_data) {double("view_data")}
   let(:view_context) {double("view context")}
 
   describe "#action" do
@@ -24,33 +27,20 @@ RSpec.describe Aldous::Respondable::Renderable do
     end
 
     it 'creates a redirect response action with the relevant parameters' do
-      expect(Aldous::Respondable::Renderable::RenderAction).to receive(:new).with(renderable.template, controller, result)
+      expect(Aldous::Respondable::Renderable::RenderAction).to receive(:new).with(renderable.template, status, controller, view_data)
       renderable.action(controller)
     end
   end
 
   describe "#template" do
-    subject(:renderable) {Aldous::Respondable::Renderable.new(result, view_context)}
+    subject(:renderable) {Aldous::Respondable::Renderable::Dummy.new(status, view_data, view_context)}
 
-    it "raises an error since template method wasn't overridden" do
-      expect {renderable.template}.to raise_error(::Aldous::Errors::UserError)
-    end
-  end
-
-  describe "#template_with_locals" do
-    it "raises an error since template method doesn't return a hash" do
-      expect {renderable.template_with_locals}.to raise_error(::Aldous::Errors::UserError)
+    it "overrides the default locals with the template locals" do
+      expect(renderable.template).to eq({locals: {hello: 1}})
     end
 
-    context "when template method returns a hash" do
-      subject(:renderable) {Aldous::Respondable::Renderable::Dummy2.new(result, view_context)}
-
-      let(:extra_locals) { {hello: 'world'} }
-      let(:template_with_extra_locals) { {locals: extra_locals} }
-
-      it "adds all the extra locals to template locals" do
-        expect(renderable.template_with_locals(extra_locals)).to eq template_with_extra_locals
-      end
+    it "overrides the template locals with the provided locals" do
+      expect(renderable.template(hello: 3)).to eq({locals: {hello: 3}})
     end
   end
 end
