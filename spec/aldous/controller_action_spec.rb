@@ -67,9 +67,9 @@ RSpec.describe Aldous::ControllerAction do
     end
   end
 
-  describe "#default_error_respondable" do
+  describe "#default_error_handler" do
     it "is a blank html view by default" do
-      expect(action.default_error_respondable).to eq Aldous::View::Blank::HtmlView
+      expect(action.default_error_handler('foo')).to eq Aldous::View::Blank::HtmlView
     end
   end
 

@@ -1,7 +1,7 @@
 RSpec.describe Aldous::Controller::ActionExecutionService do
   let(:action_execution_service) {described_class.new(controller, controller_action_class)}
 
-  let(:controller) {double "controller", head: nil}
+  let(:controller) {double "controller", head: nil, performed?: false}
   let(:controller_action_class) {double "controller_action_class", build: action}
 
   let(:action) {double 'action', perform: action_result, default_view_data: default_view_data}
@@ -44,6 +44,21 @@ RSpec.describe Aldous::Controller::ActionExecutionService do
         expect(Aldous::Controller::Action::ResultExecutionService).to receive(:perform).with(controller, action_result, default_view_data)
         perform
       end
+
+      context "but action perform halted execution due to render" do
+        before do
+          allow(controller).to receive(:performed?).and_return(false, true)
+        end
+
+        it "returns nil" do
+          expect(perform).to be_nil
+        end
+
+        it "does not execute the result" do
+          expect(Aldous::Controller::Action::ResultExecutionService).to_not receive(:perform)
+          perform
+        end
+      end
     end
 
     context "when preconditions did halt execution" do
@@ -56,6 +71,19 @@ RSpec.describe Aldous::Controller::ActionExecutionService do
       it "executes the result with precondition_result" do
         expect(Aldous::Controller::Action::ResultExecutionService).to receive(:perform).with(controller, precondition_result, default_view_data)
         perform
+      end
+
+      context "via a render on the controller object" do
+        let(:controller) {double "controller", head: nil, performed?: true}
+
+        it "returns nil" do
+          expect(perform).to be_nil
+        end
+
+        it "does not execute the result" do
+          expect(Aldous::Controller::Action::ResultExecutionService).to_not receive(:perform)
+          perform
+        end
       end
     end
 

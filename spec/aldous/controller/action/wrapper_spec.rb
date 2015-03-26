@@ -4,13 +4,13 @@ RSpec.describe Aldous::Controller::Action::Wrapper do
   let(:controller_action) { double 'controller action',
                             default_view_data: default_view_data,
                             preconditions: preconditions,
-                            default_error_respondable: default_error_respondable,
+                            default_error_handler: default_error_handler,
                             perform: nil,
                             build_view: nil }
 
   let(:default_view_data) { {default_view_data: true} }
   let(:preconditions) { double 'preconditions' }
-  let(:default_error_respondable) {double 'default_error_respondable'}
+  let(:default_error_handler) {double 'default_error_handler'}
 
   before do
     allow(Aldous::LoggingWrapper).to receive(:log)
@@ -31,14 +31,25 @@ RSpec.describe Aldous::Controller::Action::Wrapper do
         allow(controller_action).to receive(:perform).and_raise(e)
       end
 
-      it "builds a default error view with errors" do
-        expect(controller_action).to receive(:build_view).with(default_error_respondable, errors: [e])
-        perform
-      end
-
       it 'reports the error' do
         expect(Aldous::LoggingWrapper).to receive(:log).with(e)
         perform
+      end
+
+      context "and the default error handler is a respondable" do
+        let(:default_error_handler) {Aldous::Respondable::Renderable}
+
+        it "builds a default error view with errors" do
+          expect(controller_action).to receive(:build_view).with(default_error_handler, errors: [e])
+          perform
+        end
+      end
+
+      context "and the default error handler is not a respondable" do
+        it "doesn't need to do anything" do
+          expect(controller_action).to_not receive(:build_view)
+          perform
+        end
       end
     end
   end
