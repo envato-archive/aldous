@@ -10,7 +10,7 @@ class BaseAction < ::Aldous::ControllerAction
     [Shared::EnsureUserNotDisabledPrecondition]
   end
 
-  def default_error_respondable
+  def default_error_handler(error)
     Defaults::ServerErrorView
   end
 

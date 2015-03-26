@@ -37,6 +37,10 @@ module Aldous
           raise NotImplementedError.new("#{self.class.name} must implement method #perform")
         end
 
+        def controller
+          action.controller
+        end
+
         def build_view(respondable_class, extra_data = {})
           ::Aldous::BuildRespondableService.new(
             view_context: action.controller.view_context,

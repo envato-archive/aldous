@@ -1,6 +1,6 @@
 # Aldous
 
-The basic idea behind this gem is that [Rails](https://github.com/rails/rails) is missing a few key things that make our lives especially painful when our applications start gettging bigger and more complex. With Aldous we attempt to address some of these shortcomings, namely:
+The basic idea behind this gem is that [Rails](https://github.com/rails/rails) is missing a few key things that make our lives especially painful when our applications start getting bigger and more complex. With Aldous we attempt to address some of these shortcomings, namely:
 
 1) Bloated models that trample all over the single responsibility principle. God models that tend to appear despite our best intentions. Not to mention the complexity of testing objects that are so big an unwieldy.
 
@@ -113,8 +113,8 @@ or
 
 ```ruby
 hash = {}
-result = CreateUserService.perform!(hash)
 begin
+  result = CreateUserService.perform!(hash)
   if result.success?
     # do success stuff
   else #result.failure?
@@ -191,11 +191,11 @@ The first thing to do is to configure a folder for the controller actions to liv
 
 ```ruby
 config.autoload_paths += %W(
-  #{config.root}/app/controller_action
+  #{config.root}/app/controller_actions
 )
 
 config.eager_load_paths += %W(
-  #{config.root}/app/controller_action
+  #{config.root}/app/controller_actions
 )
 ```
 
@@ -250,7 +250,7 @@ class BaseAction < ::Aldous::ControllerAction
     [Shared::EnsureUserNotDisabledPrecondition]
   end
 
-  def default_error_respondable
+  def default_error_handler(error)
     Defaults::ServerErrorView
   end
 
@@ -268,11 +268,11 @@ As you can see if inherits from `Aldous::ControllerAction`. The methods you shou
 
 - `default_view_data` - this hash of data will be available to all the aldous view objects
 - `preconditions` - this is used as a replacement for `before_actions`
-- `default_error_respondable` - this view will be rendered if an unhandled error gets raised in the action code
+- `default_error_handler` - this view will be rendered if an unhandled error gets raised in the action code
 
 Similar to services, for actions you implement the `perform` method (might as well keep things consistent). All action classes have the same constructor signature, they take a controller object and you have access to this controller object in your action classes. Also a few methods from the controller get exposed directly to your action (params, session, cookies, request, response) for convenience. You can expose others via configuration in an initializer, or you can grab them from the controller instance you have access to.
 
-Controller action are automatically error free, so any error that gets raised in the perform method, automatically get caught and a view you specify in `default_error_respondable` will get rendered to handle that error.
+Controller action are automatically error free, so any error that gets raised in the perform method, automatically get caught and a view you specify in `default_error_handler` will get rendered to handle that error.
 
 Lets look at a slightly bigger controller action:
 

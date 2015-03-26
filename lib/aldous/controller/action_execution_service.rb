@@ -23,6 +23,9 @@ module Aldous
 
         precondition, precondition_result = PreconditionsExecutionService.new(action, controller).perform
 
+        # a precondition executed a render or a redirect
+        return if controller.performed?
+
         action_result = nil
         if precondition_result
           action = precondition
@@ -30,6 +33,9 @@ module Aldous
         else
           action_result = action.perform
         end
+
+        # the action executed render or a redirect
+        return if controller.performed?
 
         Action::ResultExecutionService.perform(controller, action_result, action.default_view_data)
       rescue => e

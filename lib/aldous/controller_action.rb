@@ -46,7 +46,7 @@ module Aldous
       []
     end
 
-    def default_error_respondable
+    def default_error_handler(error)
       ::Aldous::View::Blank::HtmlView
     end
 
