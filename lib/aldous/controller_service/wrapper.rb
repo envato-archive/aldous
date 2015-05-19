@@ -9,6 +9,14 @@ module Aldous
         @controller_service = controller_service
       end
 
+      def default_result_options
+        controller_service.default_result_options
+      end
+
+      def preconditions
+        controller_service.preconditions
+      end
+
       def perform
         unless check_preconditions_result.success?
           return build_result_with_default_options(check_preconditions_result)
@@ -30,14 +38,6 @@ module Aldous
 
       def check_preconditions_result
         @check_preconditions_result ||= CheckPreconditionsService.perform(preconditions)
-      end
-
-      def default_result_options
-        controller_service.default_result_options
-      end
-
-      def preconditions
-        controller_service.preconditions
       end
     end
   end

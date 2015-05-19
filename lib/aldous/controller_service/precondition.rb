@@ -8,6 +8,9 @@ module Aldous
       # get a new result class called BlahPresentPrecondition::Failure
       def self.included(base)
         failure_result_class_name = "Failure"
+        if base.ancestors.include?(Aldous::Result)
+          raise "Preconditions are not allowed to include the Aldous::Result module"
+        end
         unless base.const_defined?(failure_result_class_name)
           base.const_set(failure_result_class_name, Class.new(::Aldous::Result::PreconditionFailure))
         end
