@@ -8,7 +8,7 @@ Aldous attempts to address this, by introducing a light convention for creating 
 
 2) Big and bloated controllers (despite our best intentions) that contain business logic and are hard to test. Not to mention the logic that is spread among the various `before_actions` requiring mental compilation to understand a controller action fully. Lastly the instance variables spread all over the controller that get inherited by the view templates as global variables.
 
-Aldous addresses this by introducing the concept of a controller action object. The Rails controllers still exist by they contain no logic in them. All the logic moves to the action classes with one action per class. Instance variables from these don't automatically get inherited by the view templates and the job of `before_actions` is taken over by precondition objects. See below for a more detailed overview of Aldous controller actions.
+Aldous addresses this by introducing the concept of a controller action object. The Rails controllers still exist, but they contain no logic in them. All the logic moves to the action classes with one action per class. Instance variables from these don't automatically get inherited by the view templates and the job of `before_actions` is taken over by precondition objects. See below for a more detailed overview of Aldous controller actions.
 
 3) Views that are not really views, but are instead view templates that inherit instance variables from controllers as globals and leave no good place for view-specific logic making us resort to hacky solutions like view helpers.
 
