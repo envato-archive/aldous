@@ -5,8 +5,7 @@ RSpec.describe Aldous::Controller::Action::Wrapper do
                             default_view_data: default_view_data,
                             preconditions: preconditions,
                             default_error_handler: default_error_handler,
-                            perform: nil,
-                            build_view: nil }
+                            perform: nil }
 
   let(:default_view_data) { {default_view_data: true} }
   let(:preconditions) { double 'preconditions' }
@@ -40,14 +39,14 @@ RSpec.describe Aldous::Controller::Action::Wrapper do
         let(:default_error_handler) {Aldous::Respondable::Renderable}
 
         it "builds a default error view with errors" do
-          expect(controller_action).to receive(:build_view).with(default_error_handler, errors: [e])
+          expect(default_error_handler).to receive(:build).with(errors: [e])
           perform
         end
       end
 
       context "and the default error handler is not a respondable" do
         it "doesn't need to do anything" do
-          expect(controller_action).to_not receive(:build_view)
+          expect(default_error_handler).to_not receive(:build)
           perform
         end
       end

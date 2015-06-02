@@ -56,26 +56,4 @@ RSpec.describe Aldous::Controller::Action::Precondition do
       expect{precondition.perform}.to raise_error
     end
   end
-
-  describe "#build_view" do
-    before do
-      allow(Aldous::BuildRespondableService).to receive(:new).with(
-        view_context: view_context,
-        default_view_data: default_view_data,
-        respondable_class: respondable_class,
-        status: nil,
-        extra_data: extra_data
-      ).and_return(build_respondable_service)
-    end
-
-    let(:respondable_class) {double "respondable_class"}
-    let(:extra_data) { {hello: 1} }
-
-    let(:build_respondable_service) {double "build_respondable_service", perform: nil}
-
-    it "executes the BuildRespondableService" do
-      expect(build_respondable_service).to receive(:perform)
-      precondition.build_view(respondable_class, extra_data)
-    end
-  end
 end

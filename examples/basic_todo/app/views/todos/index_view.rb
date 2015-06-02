@@ -21,6 +21,6 @@ class Todos::IndexView < BaseView
   end
 
   def todo_view(todo)
-    build_view(Todos::IndexView::TodoView, todo: todo)
+    Todos::IndexView::TodoView.build(todo: todo)
   end
 end

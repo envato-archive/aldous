@@ -4,15 +4,15 @@ class TodosController::Update < BaseAction
   end
 
   def perform
-    return build_view(Home::ShowRedirect) unless current_user
-    return build_view(Defaults::BadRequestView, errors: [todo_params.error_message]) unless todo_params.fetch
-    return build_view(Todos::NotFoundView, todo_id: params[:id]) unless todo
-    return build_view(Defaults::ForbiddenView) unless current_ability.can?(:update, todo)
+    return Home::ShowRedirect.build unless current_user
+    return Defaults::BadRequestView.build(errors: [todo_params.error_message]) unless todo_params.fetch
+    return Todos::NotFoundView.build(todo_id: params[:id]) unless todo
+    return Defaults::ForbiddenView.build unless current_ability.can?(:update, todo)
 
     if todo.update_attributes(todo_params.fetch)
-      build_view(Todos::IndexRedirect)
+      Todos::IndexRedirect.build
     else
-      build_view(Todos::EditView)
+      Todos::EditView.build
     end
   end
 

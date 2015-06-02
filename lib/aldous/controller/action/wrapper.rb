@@ -36,7 +36,7 @@ module Aldous
 
           if error_handler.kind_of?(Class) &&
             error_handler.ancestors.include?(Aldous::Respondable::Base)
-            controller_action.build_view(error_handler, errors: [e])
+            error_handler.build(errors: [e])
           end
         end
       end

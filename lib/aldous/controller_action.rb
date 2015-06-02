@@ -50,7 +50,10 @@ module Aldous
       ::Aldous::View::Blank::HtmlView
     end
 
-    def build_view(respondable_class, extra_data = {})
+    ################################################
+    # NOTE deprecated
+    ################################################
+    def build_view(respondable_class, extra_data = {}) # deprecated
       ::Aldous::BuildRespondableService.new(
         view_context: controller.view_context,
         default_view_data: default_view_data,

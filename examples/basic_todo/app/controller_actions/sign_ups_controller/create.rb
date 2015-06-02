@@ -1,13 +1,13 @@
 class SignUpsController::Create < BaseAction
   def perform
-    return build_view(Todos::IndexRedirect) if current_user
-    return build_view(Defaults::BadRequestView, errors: [user_params.error_message]) unless user_params.fetch
+    return Todos::IndexRedirect.build if current_user
+    return Defaults::BadRequestView.build(errors: [user_params.error_message]) unless user_params.fetch
 
     if create_user_result.success?
       SignInService.perform!(session, create_user_result.user)
-      build_view(Todos::IndexRedirect)
+      Todos::IndexRedirect.build
     else
-      build_view(SignUps::NewView)
+      SignUps::NewView.build
     end
   end
 

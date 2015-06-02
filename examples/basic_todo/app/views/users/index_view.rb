@@ -21,6 +21,6 @@ class Users::IndexView < BaseView
   end
 
   def user_view(user)
-    build_view(Users::IndexView::UserView, user: user).template
+    Users::IndexView::UserView.build(user: user).template
   end
 end

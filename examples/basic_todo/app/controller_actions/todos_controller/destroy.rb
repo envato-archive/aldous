@@ -4,13 +4,13 @@ class TodosController::Destroy < BaseAction
   end
 
   def perform
-    return build_view(Home::ShowRedirect) unless current_user
-    return build_view(Todos::NotFoundView, todo_id: params[:id]) unless todo
-    return build_view(Defaults::ForbiddenView) unless current_ability.can?(:destroy, todo)
+    return Home::ShowRedirect.build unless current_user
+    return Todos::NotFoundView.build(todo_id: params[:id]) unless todo
+    return Defaults::ForbiddenView.build unless current_ability.can?(:destroy, todo)
 
     todo.destroy
 
-    build_view(Todos::IndexRedirect)
+    Todos::IndexRedirect.build
   end
 
   private

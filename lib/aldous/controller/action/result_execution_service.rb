@@ -19,7 +19,22 @@ module Aldous
         end
 
         def perform
-          respondable.action(controller).execute
+          complete_respondable.action(controller).execute
+        end
+
+        private
+
+        def complete_respondable
+          @complete_respondable ||= update_respondable_with_default_view_data
+        end
+
+        def update_respondable_with_default_view_data
+          status            = respondable.status
+          extra_data        = respondable.view_data._data
+          actual_extra_data = default_view_data.merge(extra_data)
+          view_data         = SimpleDto.new(actual_extra_data)
+
+          respondable.class.new(status, view_data, controller.view_context)
         end
       end
     end

@@ -1,11 +1,11 @@
 class Todos::AllCompletedController::Destroy < BaseAction
   def perform
-    return build_view(Home::ShowRedirect) unless current_user
+    return Home::ShowRedirect.build unless current_user
 
     if todos.destroy_all
-      build_view(Todos::IndexRedirect)
+      Todos::IndexRedirect.build
     else
-      build_view(Defaults::ServerErrorView, errors: ['Unable to delete completed todos'])
+      Defaults::ServerErrorView.build(errors: ['Unable to delete completed todos'])
     end
   end
 

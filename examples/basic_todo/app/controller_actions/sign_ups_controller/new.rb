@@ -1,7 +1,7 @@
 class SignUpsController::New < BaseAction
   def perform
-    return build_view(Todos::IndexRedirect) if current_user
+    return Todos::IndexRedirect.build if current_user
 
-    return build_view(SignUps::NewView)
+    return SignUps::NewView.build
   end
 end

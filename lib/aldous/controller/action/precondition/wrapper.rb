@@ -15,15 +15,21 @@ module Aldous
             precondition.action.default_view_data
           end
 
-          def default_error_respondable
-            precondition.action.default_error_respondable
+          def default_error_handler(error)
+            precondition.action.default_error_handler(error)
           end
 
           def perform
             precondition.perform
           rescue => e
             ::Aldous::LoggingWrapper.log(e)
-            precondition.build_view(default_error_respondable, errors: [e])
+
+            error_handler = default_error_handler(e)
+
+            if error_handler.kind_of?(Class) &&
+              error_handler.ancestors.include?(Aldous::Respondable::Base)
+              error_handler.build(errors: [e])
+            end
           end
         end
       end

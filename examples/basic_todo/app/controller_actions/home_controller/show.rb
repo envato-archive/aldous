@@ -1,7 +1,7 @@
 class HomeController::Show < BaseAction
   def perform
-    return build_view(Todos::IndexRedirect) if current_user
-    build_view(Home::ShowView)
+    return Todos::IndexRedirect.build if current_user
+    Home::ShowView.build
   end
 end
 

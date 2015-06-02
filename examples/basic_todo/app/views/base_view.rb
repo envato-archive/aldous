@@ -13,6 +13,6 @@ class BaseView < ::Aldous::Respondable::Renderable
   private
 
   def header_view
-    build_view(Modules::HeaderView)
+    Modules::HeaderView.build
   end
 end

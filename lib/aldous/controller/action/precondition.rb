@@ -41,7 +41,10 @@ module Aldous
           action.controller
         end
 
-        def build_view(respondable_class, extra_data = {})
+        ################################################
+        # NOTE deprecated
+        ################################################
+        def build_view(respondable_class, extra_data = {}) # deprecated
           ::Aldous::BuildRespondableService.new(
             view_context: action.controller.view_context,
             default_view_data: action.default_view_data,
