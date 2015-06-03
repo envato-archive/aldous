@@ -220,9 +220,9 @@ class TodosController::Index < BaseAction
   end
 
   def perform
-    return Home::ShowRedirect.build unless current_user
+    return view_builder.build(Home::ShowRedirect) unless current_user
 
-    Todos::IndexView.build
+    view_builder.build(Todos::IndexView)
   end
 
   private
@@ -287,15 +287,15 @@ class TodosController::Update < BaseAction
   end
 
   def perform
-    return Home::ShowRedirect.build unless current_user
-    return Defaults::BadRequestView.build(errors: [todo_params.error_message]) unless todo_params.fetch
-    return Todos::NotFoundView.build(todo_id: params[:id]) unless todo
-    return Defaults::ForbiddenView.build unless current_ability.can?(:update, todo)
+    return view_builder.build(Home::ShowRedirect) unless current_user
+    return view_builder.build(Defaults::BadRequestView, errors: [todo_params.error_message]) unless todo_params.fetch
+    return view_builder.build(Todos::NotFoundView, todo_id: params[:id]) unless todo
+    return view_builder.build(Defaults::ForbiddenView) unless current_ability.can?(:update, todo)
 
     if todo.update_attributes(todo_params.fetch)
-      Todos::IndexRedirect.build
+      view_builder.build(Todos::IndexRedirect)
     else
-      Todos::EditView.build
+      view_builder.build(Todos::EditView)
     end
   end
 
@@ -316,14 +316,14 @@ Let's start with the `perform` method. As you can see it's fattish, but no fatte
 ```ruby
 class SignUpsController::Create < BaseAction
   def perform
-    return Todos::IndexRedirect.build if current_user
-    return Defaults::BadRequestView.build(errors: [user_params.error_message]) unless user_params.fetch
+    return view_builder.build(Todos::IndexRedirect) if current_user
+    return view_builder.build(Defaults::BadRequestView, errors: [user_params.error_message]) unless user_params.fetch
 
     if create_user_result.success?
       SignInService.perform!(session, create_user_result.user)
-      Todos::IndexRedirect.build
+      view_builder.build(Todos::IndexRedirect)
     else
-      SignUps::NewView.build
+      view_builder.build(SignUps::NewView)
     end
   end
 
@@ -349,7 +349,7 @@ class Shared::EnsureUserNotDisabledPrecondition < BasePrecondition
 
   def perform
     if current_user && current_user.disabled && !current_ability.can?(:manage, :all)
-      return Defaults::ForbiddenView.build(errors: ['Your account has been disabled'])
+      return view_builder.build(Defaults::ForbiddenView, errors: ['Your account has been disabled'])
     end
   end
 end
@@ -437,20 +437,21 @@ class BaseView < ::Aldous::Respondable::Renderable
   private
 
   def header_view
-    Modules::HeaderView.build
+    view_builder.build(Modules::HeaderView)
   end
 end
 ```
 
 As you can see a view object ultimately inherits from `Aldous::Respondable::Renderable` and the key method to override is `template_data`. This method needs to return a hash with template or partial that we want to render as well as the locals that we want to supply. If we have a `BaseView` which I recommend, then we can also override the `default_template_locals` method. When you do this, some Aldous magic will happen and all the things in that hash will be available in all the templates as locals which is very handy for data that's common across all or most templates. The key things here is that you control it.
 
-You construct view objects either in your controller actions or in other view objects, to do this you use the `build` method of `::Aldous::Respondable::Base` which all view, redirect, send_data etc. objects should inherit from. The only place where you may have to construct view objects directly is in tests. The constructor signature of a view object is:
+You construct view objects either in your controller actions or in other view objects, to do this you use the `view_builder` object `build` method. This object is always available and you don't need to worry about providing it, but if you ever want to override it (e.g. in tests), you can inject it also. The only place where you may have to construct view objects directly is in tests. The constructor signature of a view object is:
 
 ```ruby
-def initialize(status, view_data, view_context)
+def initialize(status, view_data, view_context, view_builder)
   @status = status
   @view_data = view_data
   @view_context = view_context
+  @view_builder = view_builder
  end
 ```
 
@@ -484,7 +485,7 @@ class Todos::IndexView < BaseView
   end
 
   def todo_view(todo)
-    Todos::IndexView::TodoView.build(todo: todo)
+    view_builder.build(Todos::IndexView::TodoView, todo: todo)
   end
 end
 ```
@@ -507,7 +508,7 @@ class BaseView < ::Aldous::Respondable::Renderable
   private
 
   def header_view
-    Modules::HeaderView.build
+    view_builder.build(Modules::HeaderView)
   end
 end
 ```

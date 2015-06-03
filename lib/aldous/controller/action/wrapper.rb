@@ -27,6 +27,10 @@ module Aldous
           controller_action.controller
         end
 
+        def view_builder
+          controller_action.view_builder
+        end
+
         def perform
           controller_action.perform
         rescue => e
@@ -36,7 +40,7 @@ module Aldous
 
           if error_handler.kind_of?(Class) &&
             error_handler.ancestors.include?(Aldous::Respondable::Base)
-            error_handler.build(errors: [e])
+            view_builder.build(error_handler, errors: [e])
           end
         end
       end

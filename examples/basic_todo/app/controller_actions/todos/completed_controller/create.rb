@@ -4,16 +4,16 @@ class Todos::CompletedController::Create < BaseAction
   end
 
   def perform
-    return Home::ShowRedirect.build unless current_user
-    return Todos::NotFoundView.build(todo_id: todo_id) unless todo
-    return Defaults::ForbiddenView.build unless current_ability.can?(:update, todo)
+    return view_builder.build(Home::ShowRedirect) unless current_user
+    return view_builder.build(Todos::NotFoundView, todo_id: todo_id) unless todo
+    return view_builder.build(Defaults::ForbiddenView) unless current_ability.can?(:update, todo)
 
     todo.done = true
 
     if todo.save
-      Todos::IndexRedirect.build
+      view_builder.build(Todos::IndexRedirect)
     else
-      Defaults::ServerErrorView.build(errors: ["Unable to mark todo completed"])
+      view_builder.build(Defaults::ServerErrorView, errors: ["Unable to mark todo completed"])
     end
   end
 

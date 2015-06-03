@@ -3,7 +3,7 @@ class Shared::EnsureUserNotDisabledPrecondition < BasePrecondition
 
   def perform
     if current_user && current_user.disabled && !current_ability.can?(:manage, :all)
-      return Defaults::ForbiddenView.build(errors: ['Your account has been disabled'])
+      return view_builder.build(Defaults::ForbiddenView, errors: ['Your account has been disabled'])
     end
   end
 end

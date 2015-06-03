@@ -1,3 +1,4 @@
+require 'aldous/view_builder'
 require 'aldous/controller/preconditions_execution_service'
 require 'aldous/controller/action/result_execution_service'
 require 'aldous/logging_wrapper'

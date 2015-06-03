@@ -4,11 +4,11 @@ class TodosController::Edit < BaseAction
   end
 
   def perform
-    return Home::ShowRedirect.build unless current_user
-    return Todos::NotFoundView.build(todo_id: params[:id]) unless todo
-    return Defaults::ForbiddenView.build unless current_ability.can?(:update, todo)
+    return view_builder.build(Home::ShowRedirect) unless current_user
+    return view_builder.build(Todos::NotFoundView, todo_id: params[:id]) unless todo
+    return view_builder.build(Defaults::ForbiddenView) unless current_ability.can?(:update, todo)
 
-    Todos::EditView.build
+    view_builder.build(Todos::EditView)
   end
 
   private

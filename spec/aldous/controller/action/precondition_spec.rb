@@ -8,10 +8,11 @@ RSpec.describe Aldous::Controller::Action::Precondition do
     Object.send :remove_const, 'ExamplePrecondition'
   end
 
-  let(:precondition) {ExamplePrecondition.new(action)}
+  let(:precondition) {ExamplePrecondition.new(action, controller, view_builder)}
 
   let(:action) {double 'action', controller: controller, default_view_data: default_view_data}
   let(:controller) {double 'controller', view_context: view_context}
+  let(:view_builder) {double 'view_builder'}
   let(:view_context) {double "view_context"}
   let(:default_view_data) {double "default_view_data"}
 
@@ -23,7 +24,7 @@ RSpec.describe Aldous::Controller::Action::Precondition do
 
     it "wraps a controller action instance" do
       expect(Aldous::Controller::Action::Precondition::Wrapper).to receive(:new).with(precondition)
-      ExamplePrecondition.build(action)
+      ExamplePrecondition.build(action, controller, view_builder)
     end
   end
 
@@ -37,7 +38,7 @@ RSpec.describe Aldous::Controller::Action::Precondition do
 
     it "calls perform on the wrapper" do
       expect(wrapper).to receive(:perform)
-      ExamplePrecondition.perform(action)
+      ExamplePrecondition.perform(action, controller, view_builder)
     end
   end
 

@@ -1,24 +1,16 @@
+require 'aldous/view_builder'
 require 'aldous/simple_dto'
 
 module Aldous
   module Respondable
     class Base
-      class << self
-        def build(extra_data = {})
-          status = extra_data[:status]
-          actual_extra_data = extra_data.reject{|k, v| k == :status}
-          view_data = Aldous::SimpleDto.new(actual_extra_data)
-
-          self.new(status, view_data, view_context)
-        end
-      end
-
       attr_reader :view_data, :view_context
 
-      def initialize(status, view_data, view_context)
+      def initialize(status, view_data, view_context, view_builder = nil)
         @status = status
         @view_data = view_data
         @view_context = view_context
+        @view_builder = view_builder
       end
 
       def action(controller)
@@ -33,12 +25,15 @@ module Aldous
         :ok
       end
 
+      def view_builder
+        @view_builder ||= ViewBuilder.new(view_context, view_data._data)
+      end
+
       ################################################
       # NOTE deprecated
       ################################################
-      def build_view(klass, extra_data = {}) # deprecated
-        dto = Aldous::SimpleDto.new(view_data._data.merge(extra_data))
-        klass.new(status, dto, view_context)
+      def build_view(respondable_class, extra_data = {}) # deprecated
+        view_builder.build(respondable_class, extra_data)
       end
     end
   end

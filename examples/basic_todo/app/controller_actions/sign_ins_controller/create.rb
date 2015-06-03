@@ -1,14 +1,14 @@
 class SignInsController::Create < BaseAction
   def perform
-    return Todos::IndexRedirect.build if current_user
-    return Defaults::BadRequestView.build(status: :bad_request, errors: [user_params.error_message]) unless user_params.fetch
-    return SignIns::NewView.build(status: :not_found) unless user
+    return view_builder.build(Todos::IndexRedirect) if current_user
+    return view_builder.build(Defaults::BadRequestView, status: :bad_request, errors: [user_params.error_message]) unless user_params.fetch
+    return view_builder.build(SignIns::NewView, status: :not_found) unless user
 
     if user.authenticate(user_params.fetch[:password])
       SignInService.perform!(session, user)
-      Todos::IndexRedirect.build
+      view_builder.build(Todos::IndexRedirect)
     else
-      SignIns::NewView.build(status: :unprocessable_entity, errors: ["Incorrect credentials"])
+      view_builder.build(SignIns::NewView, status: :unprocessable_entity, errors: ["Incorrect credentials"])
     end
   end
 

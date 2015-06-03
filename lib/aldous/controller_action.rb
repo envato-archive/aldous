@@ -1,7 +1,7 @@
+require 'aldous/view_builder'
 require 'aldous/controller/action/wrapper'
 require 'aldous/view/blank/html_view'
 require 'aldous/simple_dto'
-require 'aldous/build_respondable_service'
 
 module Aldous
   class ControllerAction
@@ -30,8 +30,9 @@ module Aldous
 
     attr_reader :controller
 
-    def initialize(controller)
+    def initialize(controller, view_builder = nil)
       @controller = controller
+      @view_builder = view_builder
     end
 
     def perform
@@ -50,17 +51,15 @@ module Aldous
       ::Aldous::View::Blank::HtmlView
     end
 
+    def view_builder
+      @view_builder ||= Aldous::ViewBuilder.new(controller.view_context, default_view_data)
+    end
+
     ################################################
     # NOTE deprecated
     ################################################
     def build_view(respondable_class, extra_data = {}) # deprecated
-      ::Aldous::BuildRespondableService.new(
-        view_context: controller.view_context,
-        default_view_data: default_view_data,
-        respondable_class: respondable_class,
-        status: extra_data[:status],
-        extra_data: extra_data
-      ).perform
+      view_builder.build(respondable_class, extra_data)
     end
   end
 end

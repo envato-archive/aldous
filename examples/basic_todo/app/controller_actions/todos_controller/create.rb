@@ -4,13 +4,13 @@ class TodosController::Create < BaseAction
   end
 
   def perform
-    return Home::ShowRedirect.build unless current_user
-    return Defaults::BadRequestView.build(errors: [todo_params.error_message]) unless todo_params.fetch
+    return view_builder.build(Home::ShowRedirect) unless current_user
+    return view_builder.build(Defaults::BadRequestView, errors: [todo_params.error_message]) unless todo_params.fetch
 
     if todo.save
-      Todos::IndexRedirect.build
+      view_builder.build(Todos::IndexRedirect)
     else
-      Todos::NewView.build
+      view_builder.build(Todos::NewView)
     end
   end
 

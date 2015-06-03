@@ -1,5 +1,4 @@
 require 'aldous/controller/action/precondition/wrapper'
-require 'aldous/build_respondable_service'
 
 module Aldous
   module Controller
@@ -8,50 +7,42 @@ module Aldous
         include Aldous
 
         class << self
-          def build(action)
-            Aldous::Controller::Action::Precondition::Wrapper.new(new(action))
+          def build(action, controller, view_builder)
+            Aldous::Controller::Action::Precondition::Wrapper.new(new(action, controller, view_builder))
           end
 
-          def perform(action)
-            build(action).perform
+          def perform(action, controller, view_builder)
+            build(action, controller, view_builder).perform
           end
 
           def inherited(klass)
             ::Aldous.configuration.controller_methods_exposed_to_action.each do |method_name|
               unless klass.method_defined?(method_name)
                 define_method method_name do
-                  action.controller.send(method_name)
+                  controller.send(method_name)
                 end
               end
             end
           end
         end
 
-        attr_reader :action
+        attr_reader :action, :controller, :view_builder
 
-        def initialize(action)
+        def initialize(action, controller, view_builder)
           @action = action
+          @controller = controller
+          @view_builder = view_builder
         end
 
         def perform
           raise NotImplementedError.new("#{self.class.name} must implement method #perform")
         end
 
-        def controller
-          action.controller
-        end
-
         ################################################
         # NOTE deprecated
         ################################################
         def build_view(respondable_class, extra_data = {}) # deprecated
-          ::Aldous::BuildRespondableService.new(
-            view_context: action.controller.view_context,
-            default_view_data: action.default_view_data,
-            respondable_class: respondable_class,
-            status: extra_data[:status],
-            extra_data: extra_data
-          ).perform
+          view_builder.build(respondable_class, extra_data)
         end
       end
     end

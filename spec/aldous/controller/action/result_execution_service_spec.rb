@@ -7,24 +7,11 @@ RSpec.describe Aldous::Controller::Action::ResultExecutionService do
 
   let(:respondable) do
     double "respondable", {
-      class: respondable_class,
-      status: respondable_status,
-      view_data: respondable_view_data,
-    }
-  end
-
-  let(:respondable_class) {double "respondable_class", new: complete_respondable}
-  let(:respondable_status) {double "respondable_status"}
-  let(:respondable_view_data) {double "respondable_view_data", _data: view_data_hash}
-  let(:view_data_hash) { {foo: 'bar'} }
-
-  let(:default_view_data) { {hello: 'world'} }
-
-  let(:complete_respondable) do
-    double "complete_respondable", {
       action: action
     }
   end
+
+  let(:default_view_data) { {hello: 'world'} }
 
   let(:action) {double 'action', execute: nil}
 
@@ -52,7 +39,7 @@ RSpec.describe Aldous::Controller::Action::ResultExecutionService do
     subject(:perform) {result_execution_service.perform}
 
     it "fetches the action from the complete respondable" do
-      expect(complete_respondable).to receive(:action).with(controller)
+      expect(respondable).to receive(:action).with(controller)
       perform
     end
 
@@ -62,24 +49,3 @@ RSpec.describe Aldous::Controller::Action::ResultExecutionService do
     end
   end
 end
-
-
-        #def perform
-          #complete_respondable.action(controller).execute
-        #end
-
-        #private
-
-        #def complete_respondable
-          #@complete_respondable ||= update_respondable_with_default_view_data
-        #end
-
-        #def update_respondable_with_default_view_data
-          #status            = respondable.status
-          #extra_data        = respondable.view_data._data
-          #actual_extra_data = default_view_data.merge(extra_data)
-          #view_data         = SimpleDto.new(actual_extra_data)
-
-          #respondable.class.new(status, view_data, controller.view_context)
-        #end
-

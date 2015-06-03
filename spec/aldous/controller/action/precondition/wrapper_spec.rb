@@ -3,15 +3,18 @@ RSpec.describe Aldous::Controller::Action::Precondition::Wrapper do
 
   let(:precondition) {double 'precondition',
                       action: controller_action,
+                      view_builder: view_builder,
                       perform: nil }
 
   let(:controller_action) { double 'controller action',
                             default_view_data: default_view_data,
                             default_error_handler: default_error_handler,
+                            view_builder: view_builder,
                             perform: nil }
 
   let(:default_view_data) { {default_view_data: true} }
   let(:default_error_handler) {double 'default_error_handler'}
+  let(:view_builder) {double 'view_builder'}
 
   before do
     allow(Aldous::LoggingWrapper).to receive(:log)
@@ -43,7 +46,7 @@ RSpec.describe Aldous::Controller::Action::Precondition::Wrapper do
         let(:default_error_handler) {Aldous::Respondable::Renderable}
 
         it "builds the default error handler" do
-          allow(default_error_handler).to receive(:build).with(errors: [e])
+          allow(view_builder).to receive(:build).with(default_error_handler, errors: [e])
           perform
         end
       end

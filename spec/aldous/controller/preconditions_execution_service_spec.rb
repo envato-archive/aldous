@@ -3,7 +3,8 @@ RSpec.describe Aldous::Controller::PreconditionsExecutionService do
 
   let(:controller) {double "controller"}
   let(:action_wrapper) {double 'action wrapper', preconditions: preconditions, controller_action: action}
-  let(:action) {double 'action'}
+  let(:action) {double 'action', view_builder: view_builder}
+  let(:view_builder) {double 'view_builder'}
 
   let(:preconditions) { [] }
 
@@ -21,8 +22,8 @@ RSpec.describe Aldous::Controller::PreconditionsExecutionService do
       let(:precondition_class) {double 'precondition_class', build: precondition}
       let(:precondition) {double "precondition", perform: nil}
 
-      it "builds the precondition with the controller_aciont" do
-        expect(precondition_class).to receive(:build).with(action)
+      it "builds the precondition with the controller_action" do
+        expect(precondition_class).to receive(:build).with(action, controller, view_builder)
         perform
       end
 
