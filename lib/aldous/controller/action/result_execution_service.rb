@@ -21,6 +21,21 @@ module Aldous
 
         def perform
           respondable.action(controller).execute
+        rescue => e
+          LoggingWrapper.log(e)
+          error_handler = ::Aldous.configuration.error_handler
+
+          if error_handler.kind_of?(Class) && error_handler.ancestors.include?(Aldous::Respondable::Base)
+            view_builder.build(error_handler, errors: [e]).action(controller).execute
+          else
+            controller.head :internal_server_error
+          end
+        end
+
+        private
+
+        def view_builder
+          @view_builder ||= Aldous::ViewBuilder.new(controller.view_context, default_view_data)
         end
       end
     end
