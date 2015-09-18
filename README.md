@@ -2,17 +2,17 @@
 
 The basic idea behind this gem is that [Rails](https://github.com/rails/rails) is missing a few key things that make our lives especially painful when our applications start getting bigger and more complex. With Aldous we attempt to address some of these shortcomings, namely:
 
-1) Bloated models that trample all over the single responsibility principle. God models that tend to appear despite our best intentions. Not to mention the complexity of testing objects that are so big an unwieldy.
+1. Bloated models that trample all over the single responsibility principle. God models that tend to appear despite our best intentions. Not to mention the complexity of testing objects that are so big an unwieldy.
 
-Aldous attempts to address this, by introducing a light convention for creating service objects that conform to the same interface. See below, for the features that Aldous service objects have and how to use them in your app.
+ Aldous attempts to address this, by introducing a light convention for creating service objects that conform to the same interface. See below, for the features that Aldous service objects have and how to use them in your app.
 
-2) Big and bloated controllers (despite our best intentions) that contain business logic and are hard to test. Not to mention the logic that is spread among the various `before_actions` requiring mental compilation to understand a controller action fully. Lastly the instance variables spread all over the controller that get inherited by the view templates as global variables.
+2. Big and bloated controllers (despite our best intentions) that contain business logic and are hard to test. Not to mention the logic that is spread among the various `before_actions` requiring mental compilation to understand a controller action fully. Lastly the instance variables spread all over the controller that get inherited by the view templates as global variables.
 
-Aldous addresses this by introducing the concept of a controller action object. The Rails controllers still exist, but they contain no logic in them. All the logic moves to the action classes with one action per class. Instance variables from these don't automatically get inherited by the view templates and the job of `before_actions` is taken over by precondition objects. See below for a more detailed overview of Aldous controller actions.
+ Aldous addresses this by introducing the concept of a controller action object. The Rails controllers still exist, but they contain no logic in them. All the logic moves to the action classes with one action per class. Instance variables from these don't automatically get inherited by the view templates and the job of `before_actions` is taken over by precondition objects. See below for a more detailed overview of Aldous controller actions.
 
-3) Views that are not really views, but are instead view templates that inherit instance variables from controllers as globals and leave no good place for view-specific logic making us resort to hacky solutions like view helpers.
+3. Views that are not really views, but are instead view templates that inherit instance variables from controllers as globals and leave no good place for view-specific logic making us resort to hacky solutions like view helpers.
 
-Aldous addresses this by introducing a concept of view objects which are actual ruby objects, these live alongside the standard Rails views (which we try to call templates from now on). These view objects provide a good place for view specific logic, which lets us remove much of the logic that Rails templates tend to accumulate. And being Ruby objects this logic can be tested like it should. See below for more details about Aldous view objects.
+ Aldous addresses this by introducing a concept of view objects which are actual ruby objects, these live alongside the standard Rails views (which we try to call templates from now on). These view objects provide a good place for view specific logic, which lets us remove much of the logic that Rails templates tend to accumulate. And being Ruby objects this logic can be tested like it should. See below for more details about Aldous view objects.
 
 The key concepts that motivate Aldous are:
 
