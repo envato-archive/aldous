@@ -95,7 +95,7 @@ A couple of things of note:
 - it inherits from `Aldous::Service`, this is important as it gives it some nice behaviour.
 - the `raisable_error`, `default_result_data` and `perform` methods are part of the public interface that is inherited from `Aldous::Service`
 
-The only method is strictly *have* to override is `perform`, but I recommend you do all 3 for extra goodness that is explained below.
+The only method you strictly *have* to override is `perform`, but I recommend you do all 3 for extra goodness that is explained below.
 
 Here is how you would call it:
 
