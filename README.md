@@ -2,7 +2,7 @@
 
 The basic idea behind this gem is that [Rails](https://github.com/rails/rails) is missing a few key things that make our lives especially painful when our applications start getting bigger and more complex. With Aldous we attempt to address some of these shortcomings, namely:
 
-1) Bloated models that trample all over the single responsibility principle. God models that tend to appear despite our best intentions. Not to mention the complexity of testing objects that are so big an unwieldy.
+1) Bloated models that trample all over the single responsibility principle. God models that tend to appear despite our best intentions. Not to mention the complexity of testing objects that are so big and unwieldy.
 
 Aldous attempts to address this, by introducing a light convention for creating service objects that conform to the same interface. See below, for the features that Aldous service objects have and how to use them in your app.
 
