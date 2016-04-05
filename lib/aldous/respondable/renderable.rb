@@ -41,7 +41,7 @@ module Aldous
         end
 
         def execute
-          Shared::Flash.new(view_data, controller.flash.now).set_error
+          Shared::Flash.new(view_data, controller.flash.now).set_error if controller.respond_to?(:flash)
           controller.render template.merge(status: status)
         end
       end
